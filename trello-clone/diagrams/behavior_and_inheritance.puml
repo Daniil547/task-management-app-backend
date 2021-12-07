@@ -1,0 +1,179 @@
+@startuml
+'https://plantuml.com/class-diagram
+legend top
+Behavior&Inheritance Diagram
+
+!Describes behavior&inheritance only
+!Data&Relations are described on the other diagram
+
+- all fields are private
+ - accessors, toString, equals, hashCode, constructors are assumed
+ - void returns are assumed
+ - self generics in interface implementation are assumed
+ - "OPT" - marked member is optional. Why not Optional<T>:
+    1) Not to waste space 2) optional lists or strings can simply be empty
+
+end legend
+
+interface Copyable<T>{
+    copy(): T
+    copy(newName: String): T
+
+}
+interface PartiallyCopyable<T> {
+    --
+    /* impl via reflection? */
+    copyPartially(fieldsToCopy: Set<String>): T
+    copyPartially(name: String, fieldsToCopy: Set<String>)
+    getFieldNames(): Set<String>
+}
+
+abstract class NestedPage {
+    title: String
+    name: String //unique
+    /* part of the url like .../my-workspace/...
+    or .../my-card */
+
+    OPT description: String
+    --
+    /* accessors */
+}
+
+class Workspace extends NestedPage {
+    OPT linkToWebsite: String|URL
+    visibility: WorkspaceVisibility
+    members: Set<Member>
+    boards: List<Board>
+
+    addBoard(Board)
+    removeBoard(Board)
+    removeBoard(pos: int)
+
+    moveCardList(CardList, toB: Board, pos: int)
+    moveCard(Card, toB: Board, toCL: CardList, pos: int)
+
+    archiveBoard(Board)
+    extractBoard(Board)
+    extractAllBoards()
+}
+
+class Board extends NestedPage implements Copyable, PartiallyCopyable{
+    visibility: Visibility
+    stared: boolean
+    isActive: boolean
+    members: Set<Member>
+    allLabels: List<Label>
+    cardLists: List<CardList>
+
+
+    addCardList(CardList)
+    insertCardList(CardList, pos: int)
+    removeCardList(CardList, CardList)
+    removeCardList(CardList, pos: int)
+
+    moveCardList(CardList, pos: int)
+    moveCard(Card, toCL: CardList, pos: int)
+
+    archiveCardList(List)
+    extractCardList(List, PositionResolver, extractAllCards: boolean)
+    extractAllCardLists(PositionResolver, extractAllCards: boolean)
+    extractAllCardLists(PositionResolver, filter: Predicate<CardList>, extractAllCards: boolean)
+
+    createLabel(name: String, color: Color)
+    deleteLabel(Label)
+}
+
+class CardList extends NestedPage implements Copyable, PartiallyCopyable{
+    cards: List<Card>
+    isActive: boolean
+
+    addCard(Card)
+    insertCard(Card, pos: int)
+    removeCard(Card, Card)
+    removeCard(Card, pos: int)
+
+    moveCard(Card, pos: int)
+
+    archiveCard(Card)
+    extractCard(List, PositionResolver, extractAllCards: boolean)
+    extractAllCards(PositionResolver, extractAllCards: boolean)
+    extractAllCards(PositionResolver, filter: Predicate<Card>, extractAllCards: boolean)
+}
+class Card extends NestedPage implements Copyable, PartiallyCopyable{
+    creator: Member
+    isActive: boolean
+
+    OPT MonoCardElements: List<MonoCardElement>
+    OPT ListableCardElements: List<ListableCardElement>
+    OPT attachedLabels: List<Label>
+    OPT assignedMembers: Set<Member>
+    OPT reminder: Reminder
+    --
+    addReminder(Reminder)
+    attachLabel(Label)
+    addElement(MonoCardElement)
+    addElement(ListableCardElement)
+    assignMember(Member)
+    also remove()s
+}
+
+
+interface MonoCardElement <T> {
+    --
+    getContent(): T
+    setContent(T)
+    getName(): String
+    setName(String)
+}
+interface ListableCardElement <E> {
+    --
+    getEntry(pos: int): E
+    setEntry(pos: int)
+    getEntries(): C<E>
+    setEntries(C<E>)
+    getName(): String
+    setName(String)
+}
+class Attachment<File> implements MonoCardElement
+class CheckBox<Boolean> implements MonoCardElement
+
+class CheckList<CheckableItem> implements ListableCardElement, Copyable {
+    name: String
+    items: List<CheckableItem>
+}
+class CheckableItem {
+    checked: boolean
+    descr: String
+}
+
+
+
+interface PositionResolver {
+    /* functional */
+    /* might end up useful*/
+
+    resolvePosition(originalPos: Integer, maxPos: Integer): Integer
+}
+enum PositionResolvingOptions implements PositionResolver {
+    KEEP_POSITION (origPos -> orig)
+    APPEND (origPos -> last)
+    PREPEND (origPos -> first)
+}
+/' should I need it
+interface Archivable {
+    /* marker */
+}
+Card ..|> Archivable
+CardList ..|> Archivable
+'/
+
+CardList ..> PositionResolver
+Board ..> PositionResolver
+CheckList *.. CheckableItem
+
+
+/'FORMATTING'/
+Workspace --[hidden] Board
+CardList -right[hidden] Card
+
+@enduml
