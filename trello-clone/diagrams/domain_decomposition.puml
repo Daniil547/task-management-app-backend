@@ -1,0 +1,201 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+/'IMPORTANT'/
+/'TODO review and reconsider methods before implementing'/
+/'    TODO all the extract() methods'/
+/'    TODO all the copy() methods'/
+/'    TODO all the move() methods'/
+/'doneTODO permissions'/
+/'doneTODO archiving'/
+
+/'NOT IMPORTANT (may not do at all)'/
+/'TODO AssigneeHolder interface'/
+/'TODO ReminderHolder interface'/
+/'TODO Templator generic factory'/
+/'TODO automation'/
+
+legend top
+Domain Diagram
+
+!Describes data&relations
+!Behavior&inheritance is described on the other diagram
+
+ - all fields are private
+ - accessors, toString, equals, hashCode, constructors are assumed
+ - void returns are assumed
+ - self generics in interface implementation are assumed
+ - "OPT" - marked member is optional. Why not Optional<T>:
+    1) Not to waste space 2) optional lists or strings can simply be empty
+
+end legend
+
+
+class Workspace {
+    OPT linkToWebsite: String|URL
+    visibility: WorkspaceVisibility
+    members: Set<Member>
+    boards: List<Board>
+
+    addBoard(Board)
+    removeBoard(Board)
+    removeBoard(pos: int)
+
+    moveCardList(CardList, toB: Board, pos: int)
+    moveCard(Card, toB: Board, toCL: CardList, pos: int)
+
+    archiveBoard(Board)
+    extractBoard(Board)
+    extractAllBoards()
+}
+
+class Board {
+    visibility: Visibility
+    stared: boolean
+    isActive: boolean
+    members: Set<Member>
+    allLabels: List<Label>
+    cardLists: List<CardList>
+
+
+    addCardList(CardList)
+    insertCardList(CardList, pos: int)
+    removeCardList(CardList, CardList)
+    removeCardList(CardList, pos: int)
+
+    moveCardList(CardList, pos: int)
+    moveCard(Card, toCL: CardList, pos: int)
+
+    archiveCardList(List)
+    extractCardList(List, PositionResolver, extractAllCards: boolean)
+    extractAllCardLists(PositionResolver, extractAllCards: boolean)
+    extractAllCardLists(PositionResolver, filter: Predicate<CardList>, extractAllCards: boolean)
+
+    createLabel(name: String, color: Color)
+    deleteLabel(Label)
+}
+class CardList {
+    cards: List<Card>
+    isActive: boolean
+
+    addCard(Card)
+    insertCard(Card, pos: int)
+    removeCard(Card, Card)
+    removeCard(Card, pos: int)
+
+    moveCard(Card, pos: int)
+
+    archiveCard(Card)
+    extractCard(List, PositionResolver, extractAllCards: boolean)
+    extractAllCards(PositionResolver, extractAllCards: boolean)
+    extractAllCards(PositionResolver, filter: Predicate<Card>, extractAllCards: boolean)
+}
+class Card {
+    creator: Member
+    isActive: boolean
+
+    OPT MonoCardElements: List<MonoCardElement>
+    OPT ListableCardElements: List<ListableCardElement>
+    OPT attachedLabels: List<Label>
+    OPT assignedMembers: Set<Member>
+    OPT reminder: Reminder
+    --
+    addReminder(Reminder)
+    attachLabel(Label)
+    addElement(MonoCardElement)
+    addElement(ListableCardElement)
+    assignMember(Member)
+    also remove()s
+}
+class CardLabel{
+    name: String
+    color: awt.Color ?
+}
+interface MonoCardElement <T> {
+    --
+    getContent(): T
+    setContent(T)
+    getName(): String
+    setName(String)
+}
+interface ListableCardElement <E> {
+    --
+    getEntry(pos: int): E
+    setEntry(pos: int)
+    getEntries(): C<E>
+    setEntries(C<E>)
+    getName(): String
+    setName(String)
+}
+class Reminder {
+    startOrDue: ZonedDateTime
+    end: ZonedDateTime
+    remindOn: ZonedDateTime
+    isCompleted: boolean;
+}
+
+
+enum BoardVisibility{
+    PRIVATE,
+    WORKSPACE,
+    PUBLIC
+}
+enum WorkspaceVisibility{
+     PRIVATE,
+     PUBLIC
+}
+
+interface PositionResolver {
+    /* functional */
+    /* might end up useful*/
+
+    resolvePosition(originalPos: Integer, maxPos: Integer): Integer
+}
+
+
+class Member {
+    user: User
+    role: Role
+}
+enum Role {
+    GUEST,
+    MEMBER,
+    ADMIN
+}
+class User {
+    name: String
+    bio: String
+    email: String
+    /*other account info*/
+    timeZone: TimeZone?
+    prefLang: Enum or String?
+}
+
+Workspace "1" *-- "0..*" Board
+Board "1" *-- "0..*" CardList
+CardList "1" *-- "0..*" Card
+
+Card "1" *-- "0..1" Reminder
+Card "1" *-- "0..*" MonoCardElement
+Card "1" *-- "0..*" ListableCardElement
+
+
+Card "0..*" o-- "0..*" CardLabel : attached \n to
+Board "1" *-- "0..*" CardLabel : stored \n in
+
+ WorkspaceVisibility --o Workspace
+BoardVisibility --o Board
+Member o-left Role
+
+Board ..> PositionResolver
+CardList ..> PositionResolver
+
+Member "0..*" --o "0..*" Card : assignees
+Member "1" --o "0..*" Card : creator
+Member  "1..*" --o "*" Workspace
+User "1" *-- "0..*" Member
+
+/'FORMATTING'/
+WorkspaceVisibility -[hidden]- BoardVisibility
+
+@enduml
