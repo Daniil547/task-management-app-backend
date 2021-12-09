@@ -8,7 +8,7 @@ public class Card extends NestedPage
                   implements Copyable<Card>,
                              PartiallyCopyable<Card> {
     private Member creator;
-    private boolean active;
+    private Boolean active;
 
     private List<MonoCardElement> monoCardElements;
     private List<ListableCardElement> listableCardElements;
