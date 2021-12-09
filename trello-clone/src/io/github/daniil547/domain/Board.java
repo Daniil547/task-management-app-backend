@@ -7,7 +7,6 @@ public class Board extends NestedPage
                    implements Copyable<Board>,
                               PartiallyCopyable<Board> {
     private BoardVisibility visibility;
-    private Boolean stared;
     private Boolean active;
     private Set<Member> members;
     private List<Label> allLabels;
