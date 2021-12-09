@@ -1,6 +1,7 @@
 package io.github.daniil547.domain;
 
-public class Attachment<T> implements MonoCardElement</*File?*/> {
+public class Attachment implements MonoCardElement<String> {
+    private String filePath;
 
     /*TODO: how to store a "file"?*/
     /*TODO: accessors*/
