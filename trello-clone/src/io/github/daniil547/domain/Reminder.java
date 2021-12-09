@@ -7,7 +7,7 @@ public class Reminder {
     private ZonedDateTime startOrDue;
     private Optional<ZonedDateTime> end;
     private ZonedDateTime remindOn;
-    private Boolean completed;
+    private Boolean completed = false;
 
     /*TODO: accessors*/
     /*TODO: constructors*/

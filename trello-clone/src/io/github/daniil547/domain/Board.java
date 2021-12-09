@@ -6,8 +6,8 @@ import java.util.Set;
 public class Board extends NestedPage
                    implements Copyable<Board>,
                               PartiallyCopyable<Board> {
-    private BoardVisibility visibility;
-    private Boolean active;
+    private BoardVisibility visibility = BoardVisibility.PRIVATE;
+    private Boolean active = true;
     private Set<Member> members;
     private List<Label> allLabels;
     private List<CardList> cardLists;

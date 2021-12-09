@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Workspace extends NestedPage {
     private URL companyWebsiteUrl;
-    private WorkspaceVisibility visibility;
+    private WorkspaceVisibility visibility = WorkspaceVisibility.PRIVATE;
     private Set<Member> members;
     private List<Board> boards;
 

@@ -6,7 +6,7 @@ public class CardList extends NestedPage
                       implements Copyable<CardList>,
                                  PartiallyCopyable<CardList> {
     private List<Card> cards;
-    private Boolean active;
+    private Boolean active = true;
 
 
     /*TODO: accessors*/
