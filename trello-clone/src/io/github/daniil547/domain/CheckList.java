@@ -1,15 +1,14 @@
 package io.github.daniil547.domain;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class CheckList<E> implements ListableCardElement<CheckableItem>,
-                                     Copyable<CheckList>{
+        Copyable<CheckList>{
     private String name;
     private List<CheckableItem> items;
 
-
-    /*TODO: accessors*/
-    /*TODO: constructors*/
     /*TODO: implement*/
-
 }
