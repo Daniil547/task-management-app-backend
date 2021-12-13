@@ -1,10 +1,14 @@
 package io.github.daniil547.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Data
 public class Board extends NestedPage
         implements Copyable<Board>,
