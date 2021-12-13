@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CheckList<E> implements ListableCardElement<CheckableItem>,
-        Copyable<CheckList>{
+public class CheckList<E> extends Domain implements ListableCardElement<CheckableItem>,
+        Copyable<CheckList> {
     private String name;
     private List<CheckableItem> items;
 
