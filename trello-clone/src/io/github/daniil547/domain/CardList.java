@@ -9,9 +9,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class CardList extends NestedPage
-        implements Copyable<CardList>,
-        PartiallyCopyable<CardList> {
+public class CardList extends NestedPage {
     private List<Card> cards;
     private Boolean active = true;
 

@@ -10,9 +10,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class Board extends NestedPage
-        implements Copyable<Board>,
-        PartiallyCopyable<Board> {
+public class Board extends NestedPage {
     private BoardVisibility visibility = BoardVisibility.PRIVATE;
     private Boolean active = true;
     private Set<Member> members;
