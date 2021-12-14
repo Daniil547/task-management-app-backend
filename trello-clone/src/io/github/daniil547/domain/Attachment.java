@@ -7,7 +7,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class Attachment extends Domain implements MonoCardElement<String> {
+public class Attachment extends Domain /* implements MonoCardElement<String> */ {
     private String filePath;
 
     /*TODO: implement*/

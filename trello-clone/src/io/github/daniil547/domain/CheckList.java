@@ -9,8 +9,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class CheckList<E> extends Domain implements ListableCardElement<CheckableItem>,
-        Copyable<CheckList> {
+public class CheckList<E> extends Domain/* implements ListableCardElement<CheckableItem>,
+        Copyable<CheckList> */ {
     private String name;
     private List<CheckableItem> items;
 
