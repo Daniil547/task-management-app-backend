@@ -11,7 +11,9 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class Card extends NestedPage {
+public class Card extends NestedPage
+        implements Copyable<Card>,
+        PartiallyCopyable<Card> {
     private Member creator;
     private Boolean active = true;
 
