@@ -1,11 +1,17 @@
 package io.github.daniil547.domain;
 
-public class User {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Data
+public class User extends Resource {
     private String fullName;
     private String username;
     private String email;
     private String about;
 
     /*TODO other account info*/
-    /*TODO: accessors*/
 }

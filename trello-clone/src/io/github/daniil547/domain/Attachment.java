@@ -1,10 +1,14 @@
 package io.github.daniil547.domain;
 
-public class Attachment implements MonoCardElement<String> {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Data
+public class Attachment extends Domain /* implements MonoCardElement<String> */ {
     private String filePath;
 
-    /*TODO: how to store a "file"?*/
-    /*TODO: accessors*/
-    /*TODO: constructors*/
     /*TODO: implement*/
 }
