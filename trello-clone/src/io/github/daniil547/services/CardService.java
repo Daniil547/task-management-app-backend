@@ -24,12 +24,8 @@ public class CardService extends ResourceService<Card> {
         return card;
     }
 
-    public void printCard(Card card) {
-        System.out.println(card);
-    }
-
     public void printAllCards() {
-        cards.forEach(this::printCard);
+        cards.forEach(x -> System.out.println(toStringOf(x)));
     }
 
     public int cardsCount() {
