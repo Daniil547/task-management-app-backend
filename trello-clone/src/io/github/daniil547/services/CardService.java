@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class CardService extends io.github.daniil547.services.NestedPageService<Card> {
+public class CardService extends ResourceService<Card> {
     final List<Card> cards = new ArrayList<>(10);
 
     public Card create(Member creator, String title) {

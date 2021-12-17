@@ -8,7 +8,7 @@ public class UserService extends ResourceService<User> {
     public User create(String username, String fullName) {
         User user = new User();
 
-        super.create(user, new Member(null) /* :( */);
+        super.create(user, new Member(null) /* :( */, "Your Profile");
         /* FIXME: Was like this, got infinite recursion. We REALLY should refactor our hierarchy
             super.create(user, new Member(user));
 
