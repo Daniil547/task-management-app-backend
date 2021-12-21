@@ -10,9 +10,11 @@ import java.time.ZonedDateTime;
 @ToString(callSuper = true)
 @Data
 public abstract class Resource extends Domain {
+    private String title;
+    private String name;
+    private String description;
     private Member createdBy;
     private ZonedDateTime createdWhen;
     private Member lastUpdatedBy;
     private ZonedDateTime lastUpdatedWhen;
 }
-

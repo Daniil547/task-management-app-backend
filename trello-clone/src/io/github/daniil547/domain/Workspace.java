@@ -11,7 +11,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class Workspace extends NestedPage {
+public class Workspace extends Resource {
     private URL companyWebsiteUrl;
     private WorkspaceVisibility visibility = WorkspaceVisibility.PRIVATE;
     private Set<Member> members;

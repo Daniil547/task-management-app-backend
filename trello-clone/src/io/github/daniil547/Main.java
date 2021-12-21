@@ -68,7 +68,7 @@ public class Main {
             default -> {
                 System.out.println("I guess you meant something else");
                 System.out.println();
-                askForAction();
+                return;
             }
         }
 

@@ -10,7 +10,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class Board extends NestedPage {
+public class Board extends Resource {
     private BoardVisibility visibility = BoardVisibility.PRIVATE;
     private Boolean active = true;
     private Set<Member> members;

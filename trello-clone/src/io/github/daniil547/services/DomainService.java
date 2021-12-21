@@ -9,4 +9,9 @@ public abstract class DomainService<T extends Domain> {
         inst.setId(++uuid);
         return inst;
     }
+
+    public String toStringOf(T inst) {
+        return inst.toString();
+    }
+
 }
