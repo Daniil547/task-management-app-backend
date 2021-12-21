@@ -11,4 +11,8 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    implementation 'org.flywaydb:flyway-core:8.2.2'
+    implementation 'com.zaxxer:HikariCP:5.0.0'
+    runtimeOnly 'org.postgresql:postgresql:42.3.1'
 }
