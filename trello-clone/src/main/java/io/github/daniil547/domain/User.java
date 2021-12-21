@@ -8,7 +8,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @Data
 public class User extends Resource {
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private String username;
     private String email;
     private String about;

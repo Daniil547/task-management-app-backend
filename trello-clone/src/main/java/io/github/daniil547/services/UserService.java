@@ -14,7 +14,7 @@ public class UserService extends ResourceService<User> {
 
          */
         user.setUsername(username);
-        user.setFullName(fullName);
+        user.setFullName(fullName); //FIXME separate first and last names
 
         return user;
     }

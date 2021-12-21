@@ -1,7 +1,8 @@
 package io.github.daniil547.domain;
 
 public enum Role {
-    GUEST,
+    OWNER,
+    ADMIN,
     MEMBER,
-    ADMIN
+    GUEST
 }
