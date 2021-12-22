@@ -8,7 +8,9 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @Data
 public class Attachment extends Domain /* implements MonoCardElement<String> */ {
+    private String name;
     private String filePath;
+    private String type;
 
     /*TODO: implement*/
 }
