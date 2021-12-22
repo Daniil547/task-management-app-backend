@@ -2,7 +2,9 @@ create table cardlists
 (
     id               uuid primary key,
     board_id         uuid references boards (id)               not null,
+    position         smallint                                  not null,
 
+    unique (board_id, position),
 
     created_by       uuid references board_members (member_id) not null,
     created_when     timestamptz                               not null,
