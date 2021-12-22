@@ -1,128 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Diagram>
   <ID>DATABASE</ID>
-  <OriginalElement>3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.attachments</OriginalElement>
+  <OriginalElement>3069d58c-648b-4819-a767-0dfd8ee8ece4</OriginalElement>
   <nodes>
-    <node x="539.0" y="193.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.checklists</node>
-    <node x="699.7478448275863" y="926.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.board_members</node>
-    <node x="461.75" y="1111.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.boards</node>
-    <node x="0.0" y="217.5">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.labels_attached_to_cards</node>
-    <node x="793.6228448275863" y="1123.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.users</node>
-    <node x="913.1228448275863" y="938.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.workspace_members</node>
-    <node x="467.0" y="645.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cardlists</node>
-    <node x="246.0" y="181.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.reminders</node>
-    <node x="521.0" y="0.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.checkable_items</node>
-    <node x="887.0" y="205.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.members_cards</node>
-    <node x="37.5" y="926.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.labels</node>
-    <node x="467.0" y="388.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cards</node>
-    <node x="717.6228448275863" y="1390.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.workspaces</node>
-    <node x="700.0" y="181.0">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.attachments</node>
+    <node x="-230.86396181384248" y="-55.26968973747023">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.flyway_schema_history</node>
+    <node x="547.5584725536994" y="1073.653937947494">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.checklists</node>
+    <node x="655.5596658711218" y="306.69928400954655">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.board_members</node>
+    <node x="196.4415274463007" y="273.7565632458234">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.boards</node>
+    <node x="-125.39618138424822" y="881.7231503579952">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.labels_attached_to_cards</node>
+    <node x="991.6778042959428" y="101.68973747016707">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.users</node>
+    <node x="637.0596658711218" y="44.17899761336517">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.workspace_members</node>
+    <node x="196.4415274463007" y="600.0525059665871">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cardlists</node>
+    <node x="788.9713603818614" y="1224.2315035799522">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.checkable_items</node>
+    <node x="308.28758949880654" y="1258.8997613365152">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.reminders</node>
+    <node x="657.5596658711218" y="593.219570405728">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.members_cards</node>
+    <node x="-71.15035799522684" y="485.2267303102625">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.labels</node>
+    <node x="196.4415274463007" y="950.3484486873508">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cards</node>
+    <node x="196.4415274463007" y="-3.821002386634845">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.workspaces</node>
+    <node x="-66.39618138424828" y="1091.377088305489">3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.attachments</node>
   </nodes>
   <notes />
   <edges>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.checkable_items" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.checklists" relationship="REFERENCES">
-      <point x="0.0" y="65.5" />
-      <point x="0.0" y="-65.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cards" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cardlists" relationship="REFERENCES">
-      <point x="0.0" y="101.5" />
-      <point x="0.0" y="-113.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.labels_attached_to_cards" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.labels" relationship="REFERENCES">
-      <point x="-56.5" y="41.0" />
-      <point x="56.5" y="362.0" />
-      <point x="108.0" y="362.0" />
-      <point x="0.0" y="-65.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cardlists" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.boards" relationship="REFERENCES">
-      <point x="-71.25" y="113.5" />
-      <point x="538.25" y="899.0" />
-      <point x="604.25" y="899.0" />
-      <point x="0.0" y="-113.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.labels_attached_to_cards" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cards" relationship="REFERENCES">
-      <point x="56.5" y="41.0" />
-      <point x="169.5" y="362.0" />
-      <point x="609.5" y="362.0" />
-      <point x="0.0" y="-101.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.workspace_members" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.workspaces" relationship="REFERENCES">
-      <point x="49.75" y="53.5" />
-      <point x="1062.3728448275863" y="1084.0" />
-      <point x="1089.1228448275863" y="1084.0" />
-      <point x="1089.1228448275863" y="1364.0" />
-      <point x="860.1228448275863" y="1364.0" />
-      <point x="0.0" y="-101.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.labels" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.boards" relationship="REFERENCES">
-      <point x="0.0" y="65.5" />
-      <point x="108.0" y="1084.0" />
-      <point x="604.25" y="1084.0" />
-      <point x="0.0" y="-113.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.reminders" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cards" relationship="REFERENCES">
-      <point x="0.0" y="77.5" />
-      <point x="382.5" y="362.0" />
-      <point x="609.5" y="362.0" />
-      <point x="0.0" y="-101.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.workspace_members" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.users" relationship="REFERENCES">
-      <point x="-49.75" y="53.5" />
-      <point x="962.8728448275863" y="1084.0" />
-      <point x="936.1228448275863" y="1084.0" />
-      <point x="0.0" y="-101.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.boards" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.workspaces" relationship="REFERENCES">
-      <point x="0.0" y="113.5" />
-      <point x="604.25" y="1364.0" />
-      <point x="860.1228448275863" y="1364.0" />
-      <point x="0.0" y="-101.5" />
-    </edge>
-    <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.members_cards" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cards" relationship="REFERENCES">
-      <point x="-39.5" y="53.5" />
-      <point x="926.5" y="362.0" />
-      <point x="609.5" y="362.0" />
-      <point x="0.0" y="-101.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.board_members" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.boards" relationship="REFERENCES">
-      <point x="-40.5" y="65.5" />
-      <point x="740.2478448275863" y="1084.0" />
-      <point x="604.25" y="1084.0" />
-      <point x="0.0" y="-113.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
+    </edge>
+    <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.members_cards" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cards" relationship="REFERENCES">
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.checklists" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cards" relationship="REFERENCES">
-      <point x="0.0" y="65.5" />
-      <point x="0.0" y="-101.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.members_cards" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.board_members" relationship="REFERENCES">
-      <point x="39.5" y="53.5" />
-      <point x="1005.5" y="362.0" />
-      <point x="971.0" y="362.0" />
-      <point x="971.0" y="899.0" />
-      <point x="821.2478448275863" y="899.0" />
-      <point x="40.5" y="-65.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.board_members" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.users" relationship="REFERENCES">
-      <point x="40.5" y="65.5" />
-      <point x="821.2478448275863" y="1084.0" />
-      <point x="936.1228448275863" y="1084.0" />
-      <point x="0.0" y="-101.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.attachments" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cards" relationship="REFERENCES">
-      <point x="0.0" y="77.5" />
-      <point x="783.5" y="362.0" />
-      <point x="609.5" y="362.0" />
-      <point x="0.0" y="-101.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
     <edge source="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.cardlists" target="3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.board_members" relationship="REFERENCES">
-      <point x="71.25" y="113.5" />
-      <point x="680.75" y="899.0" />
-      <point x="740.2478448275863" y="899.0" />
-      <point x="-40.5" y="-65.5" />
+      <point x="0.0" y="-0.0" />
+      <point x="0.0" y="-0.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic" zoom="0.5195288282703038" showDependencies="false" x="581.5" y="796.5" />
-  <SelectedNodes />
+  <settings layout="Hierarchic" zoom="0.5977175463623395" showDependencies="false" x="460.5262529832935" y="816.4773269689728" />
+  <SelectedNodes>
+    <node>3069d58c-648b-4819-a767-0dfd8ee8ece4.TABLE:trello_clone_db.public.reminders</node>
+  </SelectedNodes>
   <Categories>
     <Category>Columns</Category>
     <Category>Comments</Category>
