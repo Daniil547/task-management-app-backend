@@ -1,10 +1,10 @@
 package io.github.daniil547;
 
-import io.github.daniil547.domain.Member;
-import io.github.daniil547.domain.Role;
-import io.github.daniil547.domain.User;
-import io.github.daniil547.services.CardService;
-import io.github.daniil547.services.UserService;
+import io.github.daniil547.card.CardService;
+import io.github.daniil547.user.User;
+import io.github.daniil547.user.UserService;
+import io.github.daniil547.user.member.Member;
+import io.github.daniil547.user.member.Role;
 
 import java.util.Arrays;
 import java.util.Scanner;
