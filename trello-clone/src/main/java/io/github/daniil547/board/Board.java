@@ -2,7 +2,7 @@ package io.github.daniil547.board;
 
 import io.github.daniil547.board.label.Label;
 import io.github.daniil547.card_list.CardList;
-import io.github.daniil547.common.domain.Resource;
+import io.github.daniil547.common.domain.Page;
 import io.github.daniil547.user.member.Member;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class Board extends Resource {
+public class Board extends Page {
     private BoardVisibility visibility = BoardVisibility.PRIVATE;
     private Boolean active = true;
     private Set<Member> members;

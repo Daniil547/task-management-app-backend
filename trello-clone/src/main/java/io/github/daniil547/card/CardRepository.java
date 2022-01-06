@@ -28,7 +28,7 @@ public class CardRepository extends AbstractRepository<Card> {
                                      card.getId().toString(),                           //1
                                      lastCardPosition() + 1,                            //2
                                      GregorianCalendar.from(card.getCreatedWhen()), //3
-                                     card.getName(),                                    //4
+                                     card.getPageName(),                                    //4
                                      card.getTitle(),                                   //5
                                      card.getDescription()                              //6
                                     );

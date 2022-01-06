@@ -1,21 +1,19 @@
 package io.github.daniil547.card;
 
-import io.github.daniil547.common.services.ResourceService;
-import io.github.daniil547.user.member.Member;
+import io.github.daniil547.common.services.PageService;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class CardService extends ResourceService<Card> {
+public class CardService extends PageService<Card> {
     private CardRepository repo = new CardRepository();
     private List<Card> cachedCards;// = new ArrayList<>();
 
-    public Card create(Member creator, String title, String descr) {
+    public Card create(String title, String descr) {
         Card card = new Card();
         String cardName = String.join("", title.split("\\s")) + repo.lastCardPosition();
-        super.create(card, creator, cardName.toLowerCase(), title, descr);
+        super.create(card, cardName.toLowerCase(), title, descr);
 
 
         card.setListableCardElements(new ArrayList<>());
@@ -34,8 +32,7 @@ public class CardService extends ResourceService<Card> {
     }
 
     private String cardToString(Card card) {
-        return "\"" + card.getTitle() + "\" - \"" + card.getDescription() + "\" " + card.getCreatedWhen()
-                                                                                        .format(DateTimeFormatter.RFC_1123_DATE_TIME);
+        return "\"" + card.getTitle() + "\" - \"" + card.getDescription();
     }
 
     public void printAllCards() {

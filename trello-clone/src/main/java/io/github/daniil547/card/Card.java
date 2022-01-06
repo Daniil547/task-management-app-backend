@@ -2,7 +2,7 @@ package io.github.daniil547.card;
 
 import io.github.daniil547.board.label.Label;
 import io.github.daniil547.card.elements.Reminder;
-import io.github.daniil547.common.domain.Resource;
+import io.github.daniil547.common.domain.Page;
 import io.github.daniil547.common.domain.interfaces.ListableCardElement;
 import io.github.daniil547.common.domain.interfaces.MonoCardElement;
 import io.github.daniil547.user.member.Member;
@@ -17,7 +17,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
-public class Card extends Resource {
+public class Card extends Page {
     private Member creator;
     private Boolean active = true;
 
