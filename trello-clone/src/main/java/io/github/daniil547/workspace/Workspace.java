@@ -24,6 +24,4 @@ public class Workspace extends Page {
     private WorkspaceVisibility visibility = WorkspaceVisibility.PRIVATE;
     private Set<Member> members;
     private List<Board> boards;
-
-    /*TODO: other methods*/
 }

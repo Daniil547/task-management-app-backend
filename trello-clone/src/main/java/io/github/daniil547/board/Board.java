@@ -25,7 +25,4 @@ public class Board extends Page {
     private Set<Member> members;
     private List<Label> allLabels;
     private List<CardList> cardLists;
-
-    /*TODO: other methods*/
-    /*TODO: implement*/
 }

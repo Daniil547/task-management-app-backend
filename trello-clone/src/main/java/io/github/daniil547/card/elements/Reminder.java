@@ -21,6 +21,4 @@ public class Reminder extends Domain {
     private Optional<ZonedDateTime> end;
     private ZonedDateTime remindOn;
     private Boolean completed = false;
-
-    /*TODO: other methods*/
 }

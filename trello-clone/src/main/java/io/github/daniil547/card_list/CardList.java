@@ -19,8 +19,4 @@ import java.util.List;
 public class CardList extends Page {
     private List<Card> cards;
     private Boolean active = true;
-
-
-    /*TODO: other methods*/
-    /*TODO: implement*/
 }

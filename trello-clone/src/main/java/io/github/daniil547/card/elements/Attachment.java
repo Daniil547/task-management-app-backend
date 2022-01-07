@@ -13,10 +13,8 @@ import lombok.ToString;
 @Setter(AccessLevel.PACKAGE)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class Attachment extends Domain /* implements MonoCardElement<String> */ {
+public class Attachment extends Domain {
     private String name;
     private String filePath;
     private String type;
-
-    /*TODO: implement*/
 }

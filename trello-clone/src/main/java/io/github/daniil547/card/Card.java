@@ -31,7 +31,4 @@ public class Card extends Page {
     private List<Label> attachedLabels;
     private Set<Member> assignedMembers;
     private Optional<Reminder> reminder;
-
-    /*TODO: other methods*/
-    /*TODO: implement*/
 }

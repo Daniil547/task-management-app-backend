@@ -15,10 +15,7 @@ import java.util.List;
 @Setter(AccessLevel.PACKAGE)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class CheckList<E> extends Domain/* implements ListableCardElement<CheckableItem>,
-        Copyable<CheckList> */ {
+public class CheckList<E> extends Domain {
     private String name;
     private List<CheckableItem> items;
-
-    /*TODO: implement*/
 }

@@ -19,6 +19,4 @@ public class User extends Page {
     private String username;
     private String email;
     private String about;
-
-    /*TODO other account info*/
 }
