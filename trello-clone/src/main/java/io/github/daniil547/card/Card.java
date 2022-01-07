@@ -6,17 +6,22 @@ import io.github.daniil547.common.domain.Page;
 import io.github.daniil547.common.domain.interfaces.ListableCardElement;
 import io.github.daniil547.common.domain.interfaces.MonoCardElement;
 import io.github.daniil547.user.member.Member;
-import lombok.Data;
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@Getter(AccessLevel.PACKAGE)
+@Setter(AccessLevel.PACKAGE)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Data
 public class Card extends Page {
     private Member creator;
     private Boolean active = true;
