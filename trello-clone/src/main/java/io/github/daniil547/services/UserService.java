@@ -5,16 +5,17 @@ import io.github.daniil547.domain.User;
 
 public class UserService extends ResourceService<User> {
 
-    public User create(String username, String fullName) {
+    public User create(String username, String firstName, String lastname) {
         User user = new User();
 
-        super.create(user, new Member(null) /* :( */, "Your Profile");
+        super.create(user, new Member(null) /* :( */, username, "Your Profile", "Your bio or whatever");
         /* FIXME: Was like this, got infinite recursion. We REALLY should refactor our hierarchy
             super.create(user, new Member(user));
 
          */
         user.setUsername(username);
-        user.setFullName(fullName); //FIXME separate first and last names
+        user.setFirstName(firstName);
+        user.setLastName(lastname);
 
         return user;
     }
