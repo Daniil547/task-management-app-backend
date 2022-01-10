@@ -8,8 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+/**
+ * Extension of {@link DomainSqlRepository} for Page entities.
+ * Adds their common fields.
+ *
+ * @param <E> - entity class to persist
+ */
 public abstract class PageSqlRepository<E extends Page> extends DomainSqlRepository<E> {
 
     protected PageSqlRepository(DataSource dataSource) {
@@ -17,67 +22,34 @@ public abstract class PageSqlRepository<E extends Page> extends DomainSqlReposit
     }
 
     @Override
-    public void insert(E pageEntity) throws SQLException {
-        try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(insertQuery)) {
-            fillDomainQueryParams(pageEntity, stmnt, false);
-            fillPageQueryParams(pageEntity, stmnt, 2);
+    Integer fillCommonQueryParams(E entity, PreparedStatement stmnt, Boolean idIsLast) throws SQLException {
+        super.fillCommonQueryParams(entity, stmnt, idIsLast);
 
-            stmnt.execute();
-        }
+        int startingWith = idIsLast ? 1 : 2;
+
+        stmnt.setString(startingWith, entity.getTitle());
+        stmnt.setString(startingWith + 1, entity.getPageName());
+        stmnt.setString(startingWith + 2, entity.getDescription());
+
+        return startingWith + 3;
     }
 
     @Override
-    public void update(E pageEntity) throws SQLException {
-        try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(updateQuery)) {
-            fillDomainQueryParams(pageEntity, stmnt, true);
-            fillPageQueryParams(pageEntity, stmnt, 1);
+    void fillCommonEntityFields(E entity, ResultSet resultSet) throws SQLException {
+        super.fillCommonEntityFields(entity, resultSet);
 
-            stmnt.execute();
-        }
+        entity.setTitle(resultSet.getString(columns.get(2)));
+        entity.setPageName(resultSet.getString(columns.get(3)));
+        entity.setDescription(resultSet.getString(columns.get(4)));
     }
 
     @Override
-    public E fetchById(UUID uuid) throws SQLException {
-        try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(selectByIdQuery)) {
-            stmnt.setObject(1, uuid);
+    List<String> getCommonColumns() {
+        List<String> commonColumns = new ArrayList<>();
+        commonColumns.addAll(super.getCommonColumns());
 
-            ResultSet resultSet = stmnt.executeQuery();
-            resultSet.next();
-            E resEntity = fillEntitySpecificFields(resultSet);
-            fillDomainEntityFields(resEntity, resultSet);
-            fillPageEntityFields(resEntity, resultSet);
+        commonColumns.addAll(List.of("page_title", "page_name", "page_description"));
 
-            return resEntity;
-        }
-    }
-
-    @Override
-    public List<E> fetchAll() throws SQLException {
-        try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(selectAllQuery)) {
-            ResultSet resultSet = stmnt.executeQuery();
-
-            List<E> resEntities = new ArrayList<>();
-            E tmpEntity;
-            while (resultSet.next()) {
-                tmpEntity = fillEntitySpecificFields(resultSet);
-                fillDomainEntityFields(tmpEntity, resultSet);
-                fillPageEntityFields(tmpEntity, resultSet);
-                resEntities.add(tmpEntity);
-            }
-
-            return resEntities;
-        }
-    }
-
-    private void fillPageEntityFields(E pageEntity, ResultSet resultSet) throws SQLException {
-        pageEntity.setTitle(resultSet.getString("page_title"));
-        pageEntity.setPageName(resultSet.getString("page_name"));
-        pageEntity.setDescription(resultSet.getString("page_description"));
-    }
-
-    private void fillPageQueryParams(E pageEntity, PreparedStatement stmnt, Integer startingWith) throws SQLException {
-        stmnt.setString(startingWith, pageEntity.getTitle());
-        stmnt.setString(startingWith + 1, pageEntity.getPageName());
-        stmnt.setString(startingWith + 2, pageEntity.getDescription());
+        return commonColumns;
     }
 }

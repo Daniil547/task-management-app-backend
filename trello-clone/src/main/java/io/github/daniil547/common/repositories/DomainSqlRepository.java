@@ -11,10 +11,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+
+/**
+ * This is the main implementation of Repository that works with JDBC.
+ * It contains all the common base behavior of concrete repositories and exposes abstract methods to configure it:<br><br>
+ * <p>
+ * {@link #getTableName()} of the implementing entity<br>
+ * {@link #getEntitySpecificColumns()} of that table<br>
+ * {@link #fillEntitySpecificFields(ResultSet)} into the entity itself<br>
+ * {@link #fillEntitySpecificQueryParams(Domain, PreparedStatement, Integer)} in the query<br><br>
+ * and optional<br>
+ * {@link #tweakColumnNames(List)} - if some column names differ or new columns are used instead of default ones<br>
+ *
+ * @param <E> - entity class to persist
+ */
 public abstract class DomainSqlRepository<E extends Domain> implements Repository<E, UUID> {
     protected final DataSource dataSource;
 
-    protected String insertQuery =
+    List<String> columns = new ArrayList<>();
+
+    protected final String insertQuery =
             """
             INSERT INTO %s
                 (%s)
@@ -22,10 +38,10 @@ public abstract class DomainSqlRepository<E extends Domain> implements Repositor
                 (%s)"""
                     .formatted(
                             getTableName(),
-                            commifyList(getColumns()),
-                            parameterList(getColumns().size())
+                            commifyList(columns),
+                            parameterList(columns.size())
                               );
-    protected String updateQuery =
+    protected final String updateQuery =
             """
             UPDATE %s
             SET (%s) =
@@ -33,8 +49,8 @@ public abstract class DomainSqlRepository<E extends Domain> implements Repositor
             WHERE id = ?"""
                     .formatted(
                             getTableName(),
-                            commifyList(getColumns().subList(1, 9999)),
-                            parameterList(getColumns().size() - 1)
+                            commifyList(columns.subList(1, columns.size())),
+                            parameterList(columns.size() - 1)
                               );
     protected final String selectByIdQuery = """
                                              SELECT * FROM %s
@@ -47,20 +63,33 @@ public abstract class DomainSqlRepository<E extends Domain> implements Repositor
 
     protected DomainSqlRepository(DataSource dataSource) {
         this.dataSource = dataSource;
+
+        columns.addAll(getCommonColumns());
+        columns.addAll(getEntitySpecificColumns());
+        tweakColumnNames(columns);
     }
 
-    void fillDomainQueryParams(E domainEntity, PreparedStatement stmnt, Boolean last) throws SQLException {
-        int index = last ? stmnt.getParameterMetaData().getParameterCount() - 1 : 1;
-        stmnt.setObject(index, domainEntity.getId());
+    Integer fillCommonQueryParams(E entity, PreparedStatement stmnt, Boolean idIsLast) throws SQLException {
+        int index = idIsLast ? stmnt.getParameterMetaData().getParameterCount() - 1 : 1;
+        stmnt.setObject(index, entity.getId());
+        return idIsLast ? 1 : 2;
     }
 
-    void fillDomainEntityFields(E entity, ResultSet resultSet) throws SQLException {
+    void fillCommonEntityFields(E entity, ResultSet resultSet) throws SQLException {
         entity.setId(resultSet.getObject("id", UUID.class));
+    }
+
+    List<String> getCommonColumns() {
+        return List.of("id");
+    }
+
+    protected void tweakColumnNames(List<String> columns) {
+        //do nothing by default
     }
 
     protected abstract String getTableName();
 
-    protected abstract List<String> getColumns();
+    protected abstract List<String> getEntitySpecificColumns();
 
     protected abstract void fillEntitySpecificQueryParams(E entity, PreparedStatement stmnt, Integer startingWith) throws SQLException;
 
@@ -94,8 +123,8 @@ public abstract class DomainSqlRepository<E extends Domain> implements Repositor
     @Override
     public void insert(E entity) throws SQLException {
         try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(insertQuery)) {
-            fillDomainQueryParams(entity, stmnt, false);
-            fillEntitySpecificQueryParams(entity, stmnt, 2);
+            int startingWith = fillCommonQueryParams(entity, stmnt, false);
+            fillEntitySpecificQueryParams(entity, stmnt, startingWith);
 
             stmnt.execute();
         }
@@ -104,8 +133,8 @@ public abstract class DomainSqlRepository<E extends Domain> implements Repositor
     @Override
     public void update(E entity) throws SQLException {
         try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(updateQuery)) {
-            fillDomainQueryParams(entity, stmnt, true);
-            fillEntitySpecificQueryParams(entity, stmnt, 1);
+            int startingWith = fillCommonQueryParams(entity, stmnt, true);
+            fillEntitySpecificQueryParams(entity, stmnt, startingWith);
 
             stmnt.execute();
         }
@@ -119,7 +148,7 @@ public abstract class DomainSqlRepository<E extends Domain> implements Repositor
             ResultSet resultSet = stmnt.executeQuery();
             resultSet.next();
             E resEntity = fillEntitySpecificFields(resultSet);
-            fillDomainEntityFields(resEntity, resultSet);
+            fillCommonEntityFields(resEntity, resultSet);
 
             return resEntity;
         }
@@ -134,7 +163,7 @@ public abstract class DomainSqlRepository<E extends Domain> implements Repositor
             E tmpEntity;
             while (resultSet.next()) {
                 tmpEntity = fillEntitySpecificFields(resultSet);
-                fillDomainEntityFields(tmpEntity, resultSet);
+                fillCommonEntityFields(tmpEntity, resultSet);
                 resEntities.add(tmpEntity);
             }
 
