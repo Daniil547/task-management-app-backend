@@ -1,6 +1,6 @@
 package io.github.daniil547.card_list;
 
-import io.github.daniil547.common.repositories.PageSqlRepository;
+import io.github.daniil547.common.repositories.PageJdbcRepository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-class CardListSqlRepository extends PageSqlRepository<CardList> {
+class CardListJdbcRepository extends PageJdbcRepository<CardList> {
 
-    protected CardListSqlRepository(DataSource dataSource) {
+    protected CardListJdbcRepository(DataSource dataSource) {
         super(dataSource);
     }
 

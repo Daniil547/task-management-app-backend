@@ -1,6 +1,6 @@
 package io.github.daniil547.board;
 
-import io.github.daniil547.common.repositories.PageSqlRepository;
+import io.github.daniil547.common.repositories.PageJdbcRepository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-class BoardSqlRepository extends PageSqlRepository<Board> {
+class BoardJdbcRepository extends PageJdbcRepository<Board> {
 
-    protected BoardSqlRepository(DataSource dataSource) {
+    protected BoardJdbcRepository(DataSource dataSource) {
         super(dataSource);
     }
 

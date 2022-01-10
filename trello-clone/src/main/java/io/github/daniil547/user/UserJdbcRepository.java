@@ -1,6 +1,6 @@
 package io.github.daniil547.user;
 
-import io.github.daniil547.common.repositories.PageSqlRepository;
+import io.github.daniil547.common.repositories.PageJdbcRepository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-class UserSqlRepository extends PageSqlRepository<User> {
+class UserJdbcRepository extends PageJdbcRepository<User> {
 
-    protected UserSqlRepository(DataSource dataSource) {
+    protected UserJdbcRepository(DataSource dataSource) {
         super(dataSource);
     }
 

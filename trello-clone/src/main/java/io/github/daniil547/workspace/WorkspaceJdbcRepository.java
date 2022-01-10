@@ -1,6 +1,6 @@
 package io.github.daniil547.workspace;
 
-import io.github.daniil547.common.repositories.PageSqlRepository;
+import io.github.daniil547.common.repositories.PageJdbcRepository;
 
 import javax.sql.DataSource;
 import java.net.MalformedURLException;
@@ -10,9 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-class WorkspaceSqlRepository extends PageSqlRepository<Workspace> {
+class WorkspaceJdbcRepository extends PageJdbcRepository<Workspace> {
 
-    protected WorkspaceSqlRepository(DataSource dataSource) {
+    protected WorkspaceJdbcRepository(DataSource dataSource) {
         super(dataSource);
     }
 

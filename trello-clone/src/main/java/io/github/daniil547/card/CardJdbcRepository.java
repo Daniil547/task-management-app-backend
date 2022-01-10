@@ -1,6 +1,6 @@
 package io.github.daniil547.card;
 
-import io.github.daniil547.common.repositories.PageSqlRepository;
+import io.github.daniil547.common.repositories.PageJdbcRepository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-class CardRepository extends PageSqlRepository<Card> {
+class CardJdbcRepository extends PageJdbcRepository<Card> {
 
 
-    public CardRepository(DataSource dataSource) {
+    public CardJdbcRepository(DataSource dataSource) {
         super(dataSource);
     }
 

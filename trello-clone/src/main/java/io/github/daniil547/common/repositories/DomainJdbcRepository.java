@@ -25,7 +25,7 @@ import java.util.UUID;
  *
  * @param <E> - entity class to persist
  */
-public abstract class DomainSqlRepository<E extends Domain> implements Repository<E, UUID> {
+public abstract class DomainJdbcRepository<E extends Domain> implements Repository<E, UUID> {
     protected final DataSource dataSource;
 
     List<String> columns = new ArrayList<>();
@@ -61,7 +61,7 @@ public abstract class DomainSqlRepository<E extends Domain> implements Repositor
                                              DELETE FROM %s
                                              WHERE id = ?""".formatted(getTableName());
 
-    protected DomainSqlRepository(DataSource dataSource) {
+    protected DomainJdbcRepository(DataSource dataSource) {
         this.dataSource = dataSource;
 
         columns.addAll(getCommonColumns());

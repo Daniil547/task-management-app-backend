@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Extension of {@link DomainSqlRepository} for Page entities.
+ * Extension of {@link DomainJdbcRepository} for Page entities.
  * Adds their common fields.
  *
  * @param <E> - entity class to persist
  */
-public abstract class PageSqlRepository<E extends Page> extends DomainSqlRepository<E> {
+public abstract class PageJdbcRepository<E extends Page> extends DomainJdbcRepository<E> {
 
-    protected PageSqlRepository(DataSource dataSource) {
+    protected PageJdbcRepository(DataSource dataSource) {
         super(dataSource);
     }
 
