@@ -6,11 +6,10 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class CardRepository extends PageSqlRepository<Card> {
+class CardRepository extends PageSqlRepository<Card> {
 
 
     public CardRepository(DataSource dataSource) {
@@ -19,26 +18,30 @@ public class CardRepository extends PageSqlRepository<Card> {
 
     @Override
     protected String getTableName() {
-        return "card";
+        return "cards";
     }
 
     @Override
-    protected List<String> getColumns() {
-        return Arrays.asList("id", "page_title", "page_name", "page_description", "cardlist_id", "position");
+    protected List<String> getEntitySpecificColumns() {
+        return List.of("cardlist_id", "position", "active");
     }
 
     @Override
     protected void fillEntitySpecificQueryParams(Card card, PreparedStatement stmnt, Integer startingWith) throws SQLException {
-        stmnt.setObject(startingWith + 3, card.getCardListId());
-        stmnt.setInt(startingWith + 4, card.getPosition());
+        stmnt.setObject(startingWith, card.getCardListId());
+        stmnt.setInt(startingWith + 1, card.getPosition());
+        stmnt.setBoolean(startingWith + 2, card.getActive());
+
     }
 
     @Override
     protected Card fillEntitySpecificFields(ResultSet resultSet) throws SQLException {
-        Card tmpCard;
-        tmpCard = new Card();
-        tmpCard.setCardListId(resultSet.getObject("cardlist_id", UUID.class));
-        tmpCard.setPosition(resultSet.getInt("position"));
-        return tmpCard;
+        Card card = new Card();
+
+        card.setCardListId(resultSet.getObject("cardlist_id", UUID.class));
+        card.setPosition(resultSet.getInt("position"));
+        card.setActive(resultSet.getBoolean("active"));
+
+        return card;
     }
 }
