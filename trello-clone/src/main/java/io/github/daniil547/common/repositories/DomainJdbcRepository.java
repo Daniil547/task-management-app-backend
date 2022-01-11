@@ -109,15 +109,9 @@ public abstract class DomainJdbcRepository<E extends Domain> implements Reposito
     }
 
     private String parameterList(Integer parametersCount) {
-        StringBuilder tmp = new StringBuilder();
+        String res = "?, ".repeat(parametersCount);
 
-        for (int i = 0; i < parametersCount; i++) {
-            if (i < parametersCount - 1) {
-                tmp.append(", ?");
-            }
-        }
-
-        return tmp.toString();
+        return res.substring(0, res.length() - 3); //excludes the last whitespace and comma
     }
 
     @Override
