@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -96,16 +95,9 @@ public abstract class DomainJdbcRepository<E extends Domain> implements Reposito
     protected abstract E fillEntitySpecificFields(ResultSet resultSet) throws SQLException;
 
     private String commifyList(List<String> elements) {
-        StringBuilder tmp = new StringBuilder();
+        String res = String.join(",", elements);
 
-        for (Iterator<String> it = elements.iterator(); it.hasNext(); ) {
-            tmp.append(it.next());
-            if (it.hasNext()) {
-                tmp.append(", ");
-            }
-        }
-
-        return tmp.toString();
+        return res;
     }
 
     private String parameterList(Integer parametersCount) {
