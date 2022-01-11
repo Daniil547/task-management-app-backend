@@ -95,10 +95,10 @@ public abstract class DomainJdbcRepository<E extends Domain> implements Reposito
 
     protected abstract E fillEntitySpecificFields(ResultSet resultSet) throws SQLException;
 
-    private <T> String commifyList(List<T> elements) {
+    private String commifyList(List<String> elements) {
         StringBuilder tmp = new StringBuilder();
 
-        for (Iterator<T> it = elements.iterator(); it.hasNext(); ) {
+        for (Iterator<String> it = elements.iterator(); it.hasNext(); ) {
             tmp.append(it.next());
             if (it.hasNext()) {
                 tmp.append(", ");
