@@ -9,8 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-class CardJdbcRepository extends PageJdbcRepository<Card> {
-
+class CardJdbcRepository extends PageJdbcRepository<Card> implements CardRepository {
 
     public CardJdbcRepository(DataSource dataSource) {
         super(dataSource);

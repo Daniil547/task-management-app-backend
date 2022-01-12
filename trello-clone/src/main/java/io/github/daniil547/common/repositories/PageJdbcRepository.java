@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @param <E> - entity class to persist
  */
-public abstract class PageJdbcRepository<E extends Page> extends DomainJdbcRepository<E> {
+public abstract class PageJdbcRepository<E extends Page> extends DomainJdbcRepository<E> implements PageRepository<E> {
 
     protected PageJdbcRepository(DataSource dataSource) {
         super(dataSource);

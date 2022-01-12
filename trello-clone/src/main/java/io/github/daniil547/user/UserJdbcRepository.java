@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-class UserJdbcRepository extends PageJdbcRepository<User> {
+class UserJdbcRepository extends PageJdbcRepository<User> implements UserRepository {
 
     protected UserJdbcRepository(DataSource dataSource) {
         super(dataSource);

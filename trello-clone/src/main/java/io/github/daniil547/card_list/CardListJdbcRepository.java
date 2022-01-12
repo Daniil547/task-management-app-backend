@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-class CardListJdbcRepository extends PageJdbcRepository<CardList> {
+class CardListJdbcRepository extends PageJdbcRepository<CardList> implements CardListRepository {
 
     protected CardListJdbcRepository(DataSource dataSource) {
         super(dataSource);
