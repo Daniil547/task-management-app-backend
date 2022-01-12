@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DataSourceManager {
-    public static DataSource createDataSource() {
+    public static DataSource createHikariDataSource() {
         Properties properties = PropertyLoader.loadProperties();
 
         HikariConfig cfg = new HikariConfig();
@@ -25,6 +25,6 @@ public class DataSourceManager {
     }
 
     public static Connection getConnection() throws SQLException {
-        return createDataSource().getConnection();
+        return createHikariDataSource().getConnection();
     }
 }
