@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -24,15 +26,14 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class Card extends Page {
-    private Member creator;
     private Boolean active = true;
 
     private UUID cardListId;
     private Integer position;
 
-    private List<MonoCardElement> monoCardElements;
-    private List<ListableCardElement> listableCardElements;
-    private List<Label> attachedLabels;
-    private Set<Member> assignedMembers;
-    private Optional<Reminder> reminder;
+    private List<MonoCardElement> monoCardElements = new ArrayList<>();
+    private List<ListableCardElement> listableCardElements = new ArrayList<>();
+    private List<Label> attachedLabels = new ArrayList<>();
+    private Set<Member> assignedMembers = new HashSet<>();
+    private Optional<Reminder> reminder = Optional.empty();
 }

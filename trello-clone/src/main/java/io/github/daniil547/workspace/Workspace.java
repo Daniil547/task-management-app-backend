@@ -11,6 +11,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +24,6 @@ import java.util.Set;
 public class Workspace extends Page {
     private URL companyWebsiteUrl;
     private WorkspaceVisibility visibility = WorkspaceVisibility.PRIVATE;
-    private Set<Member> members;
-    private List<Board> boards;
+    private Set<Member> members = new HashSet<>();
+    private List<Board> boards = new ArrayList<>();
 }
