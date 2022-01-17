@@ -7,8 +7,8 @@ import java.util.UUID;
 public class DefaultBoardService extends DefaultPageService<Board> implements BoardService {
     private final BoardRepository repo;
 
-    public DefaultBoardService(BoardRepository repo) {
-        this.repo = repo;
+    public DefaultBoardService(BoardRepository boardRepository) {
+        this.repo = boardRepository;
     }
 
     public Board create(String boardPageName, String boardTitle, String boardDescr, UUID workspaceId) {
@@ -17,7 +17,7 @@ public class DefaultBoardService extends DefaultPageService<Board> implements Bo
 
         board.setWorkspaceId(workspaceId);
 
-        return board;
+        return save(board);
     }
 
     @Override

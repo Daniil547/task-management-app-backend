@@ -7,8 +7,8 @@ import java.util.UUID;
 public class DefaultCardListService extends DefaultPageService<CardList> {
     private final CardListRepository repo;
 
-    public DefaultCardListService(CardListRepository repo) {
-        this.repo = repo;
+    public DefaultCardListService(CardListRepository cardListRepository) {
+        this.repo = cardListRepository;
     }
 
     public CardList create(String cardListPageName, String cardListTitle, String cardListDescr, UUID boardId, Integer position) {

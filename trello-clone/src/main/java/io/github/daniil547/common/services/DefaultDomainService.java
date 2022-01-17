@@ -4,32 +4,33 @@ import io.github.daniil547.common.domain.Domain;
 import io.github.daniil547.common.repositories.DomainRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public abstract class DefaultDomainService<E extends Domain> implements DomainService<E> {
 
     @Override
-    public void save(E entity) throws Exception {
-        getRepository().insert(entity);
+    public E save(E entity) {
+        return getRepository().insert(entity);
     }
 
     @Override
-    public void update(E entity) throws Exception {
-        getRepository().update(entity);
+    public E update(E entity) {
+        return getRepository().update(entity);
     }
 
     @Override
-    public E getById(UUID uuid) throws Exception {
+    public Optional<E> getById(UUID uuid) {
         return getRepository().fetchById(uuid);
     }
 
     @Override
-    public List<E> getAll() throws Exception {
+    public List<E> getAll() {
         return getRepository().fetchAll();
     }
 
     @Override
-    public void deleteById(UUID uuid) throws Exception {
+    public void deleteById(UUID uuid) {
         getRepository().deleteById(uuid);
     }
 
