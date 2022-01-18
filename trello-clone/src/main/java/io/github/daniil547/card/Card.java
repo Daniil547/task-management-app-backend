@@ -16,6 +16,7 @@ import lombok.ToString;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter(AccessLevel.PACKAGE)
@@ -25,6 +26,9 @@ import java.util.Set;
 public class Card extends Page {
     private Member creator;
     private Boolean active = true;
+
+    private UUID cardListId;
+    private Integer position;
 
     private List<MonoCardElement> monoCardElements;
     private List<ListableCardElement> listableCardElements;

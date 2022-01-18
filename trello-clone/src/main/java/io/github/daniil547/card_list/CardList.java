@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter(AccessLevel.PACKAGE)
@@ -17,6 +18,9 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class CardList extends Page {
+    private UUID boardId;
+    private Integer position;
+
     private List<Card> cards;
     private Boolean active = true;
 }

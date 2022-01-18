@@ -1,12 +1,13 @@
 package io.github.daniil547.card;
 
+import io.github.daniil547.common.db.DataSourceManager;
 import io.github.daniil547.common.services.PageService;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class CardService extends PageService<Card> {
-    private CardRepository repo = new CardRepository();
+    private CardRepository repo = new CardRepository(DataSourceManager.createDataSource());
 
     public Card create(String pageName, String title, String descr) {
         Card card = new Card();

@@ -6,8 +6,6 @@ create table cardlists
 
     unique (board_id, position),
 
-    created_by       uuid references board_members (member_id) not null,
-    created_when     timestamptz                               not null,
     /* problematic, better be implemented via logging and aspects
     last_updated_by uuid references workspace_members(user_id, workspace_id),
     last_updated_when timestamptz,

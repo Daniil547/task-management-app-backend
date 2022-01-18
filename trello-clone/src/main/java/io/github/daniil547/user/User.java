@@ -19,4 +19,24 @@ public class User extends Page {
     private String username;
     private String email;
     private String about;
+
+    @Override
+    public String getPageName() {
+        return getUsername();
+    }
+
+    @Override
+    public void setPageName(String username) {
+        setUsername(username);
+    }
+
+    @Override
+    public String getDescription() {
+        return getAbout();
+    }
+
+    @Override
+    public void setDescription(String about) {
+        setAbout(about);
+    }
 }

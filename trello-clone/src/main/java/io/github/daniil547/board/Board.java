@@ -13,6 +13,7 @@ import lombok.ToString;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter(AccessLevel.PACKAGE)
@@ -20,6 +21,8 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class Board extends Page {
+    private UUID workspaceId;
+
     private BoardVisibility visibility = BoardVisibility.PRIVATE;
     private Boolean active = true;
     private Set<Member> members;
