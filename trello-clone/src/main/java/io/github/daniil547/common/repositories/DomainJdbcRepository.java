@@ -30,36 +30,11 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
 
     List<String> columns = new ArrayList<>();
 
-    protected final String insertQuery =
-            """
-            INSERT INTO %s
-                (%s)
-            VALUES
-                (%s)"""
-                    .formatted(
-                            getTableName(),
-                            commifyList(columns),
-                            parameterList(columns.size())
-                              );
-    protected final String updateQuery =
-            """
-            UPDATE %s
-            SET (%s) =
-                (%s)
-            WHERE id = ?"""
-                    .formatted(
-                            getTableName(),
-                            commifyList(columns.subList(1, columns.size())),
-                            parameterList(columns.size() - 1)
-                              );
-    protected final String selectByIdQuery = """
-                                             SELECT * FROM %s
-                                             WHERE id = ?""".formatted(getTableName());
-    protected final String selectAllQuery = """
-                                            SELECT * FROM %s""".formatted(getTableName());
-    protected final String deleteByIdQuery = """
-                                             DELETE FROM %s
-                                             WHERE id = ?""".formatted(getTableName());
+    protected final String insertQuery;
+    protected final String updateQuery;
+    protected final String selectByIdQuery;
+    protected final String selectAllQuery;
+    protected final String deleteByIdQuery;
 
     protected DomainJdbcRepository(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -67,10 +42,42 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
         columns.addAll(getCommonColumns());
         columns.addAll(getEntitySpecificColumns());
         tweakColumnNames(columns);
+
+        this.insertQuery = """
+                           INSERT INTO %s
+                               (%s)
+                           VALUES
+                               (%s)"""
+                .formatted(
+                        getTableName(),
+                        commifyList(columns),
+                        parameterList(columns.size())
+                          );
+        this.updateQuery = """
+                           UPDATE %s
+                           SET (%s) =
+                               (%s)
+                           WHERE id = ?"""
+                .formatted(
+                        getTableName(),
+                        commifyList(columns.subList(1, columns.size())),
+                        parameterList(columns.size() - 1)
+                          );
+        this.selectByIdQuery = """
+                               SELECT * FROM %s
+                               WHERE id = ?"""
+                .formatted(getTableName());
+        this.selectAllQuery = """
+                              SELECT * FROM %s"""
+                .formatted(getTableName());
+        this.deleteByIdQuery = """
+                               DELETE FROM %s
+                               WHERE id = ?"""
+                .formatted(getTableName());
     }
 
     Integer fillCommonQueryParams(E entity, PreparedStatement stmnt, Boolean idIsLast) throws SQLException {
-        int index = idIsLast ? stmnt.getParameterMetaData().getParameterCount() - 1 : 1;
+        int index = idIsLast ? stmnt.getParameterMetaData().getParameterCount() : 1;
         stmnt.setObject(index, entity.getId());
         return idIsLast ? 1 : 2;
     }
@@ -104,7 +111,7 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
     private String parameterList(Integer parametersCount) {
         String res = "?, ".repeat(parametersCount);
 
-        return res.substring(0, res.length() - 3); //excludes the last whitespace and comma
+        return res.substring(0, res.length() - 2); //excludes the last whitespace and comma
     }
 
     @Override
@@ -140,7 +147,7 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
             int rowsUpdated = stmnt.executeUpdate();
 
             if (rowsUpdated == 0) {
-                throw new IllegalStateException("update failed: no entity with this ID found");
+                throw new IllegalStateException("update failed: no entity with given ID found");
             }
 
             //in case there was any mutation on the DB side.

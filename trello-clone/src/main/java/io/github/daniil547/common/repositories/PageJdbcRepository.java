@@ -38,9 +38,9 @@ public abstract class PageJdbcRepository<E extends Page> extends DomainJdbcRepos
     void fillCommonEntityFields(E entity, ResultSet resultSet) throws SQLException {
         super.fillCommonEntityFields(entity, resultSet);
 
-        entity.setTitle(resultSet.getString(columns.get(2)));
-        entity.setPageName(resultSet.getString(columns.get(3)));
-        entity.setDescription(resultSet.getString(columns.get(4)));
+        entity.setTitle(resultSet.getString(columns.get(1))); //columns is a list, from zero
+        entity.setPageName(resultSet.getString(columns.get(2)));
+        entity.setDescription(resultSet.getString(columns.get(3)));
     }
 
     @Override

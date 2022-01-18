@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class Workspace extends Page {
-    private URL companyWebsiteUrl;
+    private String companyWebsiteUrl;
     private WorkspaceVisibility visibility = WorkspaceVisibility.PRIVATE;
     private Set<Member> members = new HashSet<>();
     private List<Board> boards = new ArrayList<>();

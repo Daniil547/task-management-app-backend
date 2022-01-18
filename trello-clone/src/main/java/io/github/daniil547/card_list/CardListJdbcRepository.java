@@ -17,7 +17,7 @@ class CardListJdbcRepository extends PageJdbcRepository<CardList> implements Car
 
     @Override
     protected String getTableName() {
-        return "cardlist";
+        return "cardlists";
     }
 
     @Override

@@ -27,7 +27,9 @@ class UserJdbcRepository extends PageJdbcRepository<User> implements UserReposit
     @Override
     protected void tweakColumnNames(List<String> columns) {
         columns.add(columns.indexOf("page_name"), "username");
+        columns.remove("page_name");
         columns.add(columns.indexOf("page_description"), "about");
+        columns.remove("page_description");
     }
 
     @Override

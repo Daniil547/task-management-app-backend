@@ -18,7 +18,7 @@ public class DefaultCardListService extends DefaultPageService<CardList> {
         cardList.setBoardId(boardId);
         cardList.setPosition(position);
 
-        return cardList;
+        return save(cardList);
     }
 
     @Override
