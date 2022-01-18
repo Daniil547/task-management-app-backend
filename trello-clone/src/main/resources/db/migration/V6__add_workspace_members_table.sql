@@ -1,9 +1,9 @@
-create table workspace_members
+create table "workspace_members"
 (
-    user_id      uuid references users (id)      not null,
-    workspace_id uuid references workspaces (id) not null,
+    "member_id"    uuid primary key,
 
-    role         user_role                       not null default 'GUEST',
+    "user_id"      uuid      not null references users (id),
+    "workspace_id" uuid      not null references workspaces (id),
 
-    primary key (user_id, workspace_id)
-)
+    "role"         user_role not null default 'GUEST'
+);

@@ -1,13 +1,12 @@
 create table users
 (
-    id           uuid primary key,
-    created_when timestamptz not null,
+    id         uuid primary key,
 
-    page_title   varchar(50) not null default 'User Profile',
+    page_title varchar(50) not null default 'User Profile',
 
-    username     varchar(20) not null unique,
-    first_name   varchar(20) not null,
-    last_name    varchar(20) not null,
-    email        varchar(40) not null unique,
-    about        varchar(250)
+    username   varchar(20) not null unique,
+    first_name varchar(20) not null,
+    last_name  varchar(20) not null,
+    email      varchar(40) not null unique,
+    about      varchar(250)
 )
