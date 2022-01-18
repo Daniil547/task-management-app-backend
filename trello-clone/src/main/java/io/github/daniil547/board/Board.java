@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -25,7 +27,7 @@ public class Board extends Page {
 
     private BoardVisibility visibility = BoardVisibility.PRIVATE;
     private Boolean active = true;
-    private Set<Member> members;
-    private List<Label> allLabels;
-    private List<CardList> cardLists;
+    private Set<Member> members = new HashSet<>();
+    private List<Label> allLabels = new ArrayList<>();
+    private List<CardList> cardLists = new ArrayList<>();
 }

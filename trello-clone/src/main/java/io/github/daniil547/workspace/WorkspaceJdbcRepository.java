@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-class WorkspaceJdbcRepository extends PageJdbcRepository<Workspace> {
+class WorkspaceJdbcRepository extends PageJdbcRepository<Workspace> implements WorkspaceRepository {
 
     protected WorkspaceJdbcRepository(DataSource dataSource) {
         super(dataSource);

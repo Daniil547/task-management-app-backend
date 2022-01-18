@@ -24,7 +24,7 @@ import java.util.UUID;
  *
  * @param <E> - entity class to persist
  */
-public abstract class DomainJdbcRepository<E extends Domain> implements Repository<E, UUID> {
+public abstract class DomainJdbcRepository<E extends Domain> implements DomainRepository<E> {
     protected final DataSource dataSource;
 
     List<String> columns = new ArrayList<>();

@@ -8,13 +8,13 @@ import java.io.IOException;
 public class FlywayHandler {
 
     public static void main(String[] args) throws IOException {
-        Flyway flyway = createFlyway(DataSourceManager.createDataSource());
+        Flyway flyway = createFlyway(DataSourceManager.createHikariDataSource());
         flyway.migrate();
     }
 
     private static Flyway createFlyway(DataSource dataSource) throws IOException {
         return Flyway.configure()
-                     .dataSource(DataSourceManager.createDataSource())
+                     .dataSource(DataSourceManager.createHikariDataSource())
                      .load();
     }
 

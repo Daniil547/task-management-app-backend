@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,6 @@ public class CardList extends Page {
     private UUID boardId;
     private Integer position;
 
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
     private Boolean active = true;
 }
