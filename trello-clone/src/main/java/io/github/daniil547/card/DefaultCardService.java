@@ -8,7 +8,7 @@ public class DefaultCardService extends DefaultPageService<Card> implements Card
     private final CardRepository repo;
 
     public DefaultCardService(CardRepository cardRepository) {
-        repo = cardRepository;
+        this.repo = cardRepository;
     }
 
     public Card create(String cardPageName, String cardTitle, String cardDescr, UUID cardListId, Integer position) {
@@ -18,7 +18,7 @@ public class DefaultCardService extends DefaultPageService<Card> implements Card
         card.setCardListId(cardListId);
         card.setPosition(position);
 
-        return card;
+        return save(card);
     }
 
     @Override

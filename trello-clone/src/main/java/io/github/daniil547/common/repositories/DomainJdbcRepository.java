@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -29,36 +30,11 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
 
     List<String> columns = new ArrayList<>();
 
-    protected final String insertQuery =
-            """
-            INSERT INTO %s
-                (%s)
-            VALUES
-                (%s)"""
-                    .formatted(
-                            getTableName(),
-                            commifyList(columns),
-                            parameterList(columns.size())
-                              );
-    protected final String updateQuery =
-            """
-            UPDATE %s
-            SET (%s) =
-                (%s)
-            WHERE id = ?"""
-                    .formatted(
-                            getTableName(),
-                            commifyList(columns.subList(1, columns.size())),
-                            parameterList(columns.size() - 1)
-                              );
-    protected final String selectByIdQuery = """
-                                             SELECT * FROM %s
-                                             WHERE id = ?""".formatted(getTableName());
-    protected final String selectAllQuery = """
-                                            SELECT * FROM %s""".formatted(getTableName());
-    protected final String deleteByIdQuery = """
-                                             DELETE FROM %s
-                                             WHERE id = ?""".formatted(getTableName());
+    protected final String insertQuery;
+    protected final String updateQuery;
+    protected final String selectByIdQuery;
+    protected final String selectAllQuery;
+    protected final String deleteByIdQuery;
 
     protected DomainJdbcRepository(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -66,10 +42,42 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
         columns.addAll(getCommonColumns());
         columns.addAll(getEntitySpecificColumns());
         tweakColumnNames(columns);
+
+        this.insertQuery = """
+                           INSERT INTO %s
+                               (%s)
+                           VALUES
+                               (%s)"""
+                .formatted(
+                        getTableName(),
+                        commifyList(columns),
+                        parameterList(columns.size())
+                          );
+        this.updateQuery = """
+                           UPDATE %s
+                           SET (%s) =
+                               (%s)
+                           WHERE id = ?"""
+                .formatted(
+                        getTableName(),
+                        commifyList(columns.subList(1, columns.size())),
+                        parameterList(columns.size() - 1)
+                          );
+        this.selectByIdQuery = """
+                               SELECT * FROM %s
+                               WHERE id = ?"""
+                .formatted(getTableName());
+        this.selectAllQuery = """
+                              SELECT * FROM %s"""
+                .formatted(getTableName());
+        this.deleteByIdQuery = """
+                               DELETE FROM %s
+                               WHERE id = ?"""
+                .formatted(getTableName());
     }
 
     Integer fillCommonQueryParams(E entity, PreparedStatement stmnt, Boolean idIsLast) throws SQLException {
-        int index = idIsLast ? stmnt.getParameterMetaData().getParameterCount() - 1 : 1;
+        int index = idIsLast ? stmnt.getParameterMetaData().getParameterCount() : 1;
         stmnt.setObject(index, entity.getId());
         return idIsLast ? 1 : 2;
     }
@@ -103,45 +111,75 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
     private String parameterList(Integer parametersCount) {
         String res = "?, ".repeat(parametersCount);
 
-        return res.substring(0, res.length() - 3); //excludes the last whitespace and comma
+        return res.substring(0, res.length() - 2); //excludes the last whitespace and comma
     }
 
     @Override
-    public void insert(E entity) throws SQLException {
+    public E insert(E entity) {
         try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(insertQuery)) {
             int startingWith = fillCommonQueryParams(entity, stmnt, false);
             fillEntitySpecificQueryParams(entity, stmnt, startingWith);
 
             stmnt.execute();
+
+            //in case there was some mutation on the DB side
+            Optional<E> actuallyPersisted = fetchById(entity.getId());
+
+            //we just inserted, so it shouldn't be empty
+            //and if insertion failed, these lines wouldn't execute
+            if (actuallyPersisted.isPresent()) {
+                return actuallyPersisted.get();
+            } else {
+                //but if they actually do, there must be something really wrong
+                throw new IllegalStateException("insert failed: immediate retrieval failed");
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("insert failed", e);
         }
     }
 
     @Override
-    public void update(E entity) throws SQLException {
+    public E update(E entity) {
         try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(updateQuery)) {
             int startingWith = fillCommonQueryParams(entity, stmnt, true);
             fillEntitySpecificQueryParams(entity, stmnt, startingWith);
 
-            stmnt.execute();
+            int rowsUpdated = stmnt.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new IllegalStateException("update failed: no entity with given ID found");
+            }
+
+            //in case there was any mutation on the DB side.
+            //we updated already inserted value, so it shouldn't be empty
+            E actuallyPersisted = fetchById(entity.getId()).get();
+            return actuallyPersisted;
+        } catch (SQLException e) {
+            throw new IllegalStateException("update failed", e);
         }
     }
 
     @Override
-    public E fetchById(UUID uuid) throws SQLException {
+    public Optional<E> fetchById(UUID uuid) {
         try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(selectByIdQuery)) {
             stmnt.setObject(1, uuid);
 
             ResultSet resultSet = stmnt.executeQuery();
-            resultSet.next();
-            E resEntity = fillEntitySpecificFields(resultSet);
-            fillCommonEntityFields(resEntity, resultSet);
+            if (resultSet.next()) {
+                E resEntity = fillEntitySpecificFields(resultSet);
+                fillCommonEntityFields(resEntity, resultSet);
+                return Optional.of(resEntity);
+            } else {
+                return Optional.empty();
+            }
 
-            return resEntity;
+        } catch (SQLException e) {
+            throw new IllegalStateException("getchById failed", e);
         }
     }
 
     @Override
-    public List<E> fetchAll() throws SQLException {
+    public List<E> fetchAll() {
         try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(selectAllQuery)) {
             ResultSet resultSet = stmnt.executeQuery();
 
@@ -154,14 +192,18 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
             }
 
             return resEntities;
+        } catch (SQLException e) {
+            throw new IllegalStateException("fetchAll failed", e);
         }
     }
 
     @Override
-    public void deleteById(UUID uuid) throws SQLException {
+    public void deleteById(UUID uuid) {
         try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(deleteByIdQuery)) {
             stmnt.setObject(1, uuid);
             stmnt.execute();
+        } catch (SQLException e) {
+            throw new IllegalStateException("deleteById failed", e);
         }
     }
 }

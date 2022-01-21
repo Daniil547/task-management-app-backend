@@ -1,16 +1,17 @@
 package io.github.daniil547.common.services;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Service<E, ID> {
 
-    void save(E entity) throws Exception;
+    E save(E entity);
 
-    void update(E entity) throws Exception;
+    E update(E entity);
 
-    E getById(ID id) throws Exception;
+    Optional<E> getById(ID id);
 
-    List<E> getAll() throws Exception;
+    List<E> getAll();
 
-    void deleteById(ID id) throws Exception;
+    void deleteById(ID id);
 }

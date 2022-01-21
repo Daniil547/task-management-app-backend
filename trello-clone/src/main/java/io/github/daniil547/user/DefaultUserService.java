@@ -7,7 +7,7 @@ public class DefaultUserService extends DefaultPageService<User> implements User
     UserRepository repo;
 
     public DefaultUserService(UserRepository userRepository) {
-        this.repo = repo;
+        this.repo = userRepository;
     }
 
     public User create(String username, String firstName, String lastname, String email) {
@@ -19,7 +19,7 @@ public class DefaultUserService extends DefaultPageService<User> implements User
         user.setLastName(lastname);
         user.setEmail(email);
 
-        return user;
+        return save(user);
     }
 
     @Override

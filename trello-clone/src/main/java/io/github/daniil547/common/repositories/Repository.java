@@ -1,15 +1,16 @@
 package io.github.daniil547.common.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Repository<E, ID> {
-    void insert(E entity) throws Exception;
+    E insert(E entity);
 
-    void update(E entity) throws Exception;
+    E update(E entity);
 
-    E fetchById(ID id) throws Exception;
+    Optional<E> fetchById(ID id);
 
-    List<E> fetchAll() throws Exception;
+    List<E> fetchAll();
 
-    void deleteById(ID id) throws Exception;
+    void deleteById(ID id);
 }

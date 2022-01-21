@@ -1,14 +1,14 @@
 create table cardlists
 (
     id               uuid primary key,
-    board_id         uuid references boards (id)               not null,
+    board_id         uuid                                      not null references boards (id),
     position         smallint                                  not null,
 
     unique (board_id, position),
 
     /* problematic, better be implemented via logging and aspects
     last_updated_by uuid references workspace_members(user_id, workspace_id),
-    last_updated_when timestamptz,
+    last_updated_when timestamp with time zone,
     */
 
     page_title       varchar(20)                               not null default 'My List',

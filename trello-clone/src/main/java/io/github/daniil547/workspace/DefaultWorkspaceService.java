@@ -3,10 +3,10 @@ package io.github.daniil547.workspace;
 import io.github.daniil547.common.services.DefaultPageService;
 
 public class DefaultWorkspaceService extends DefaultPageService<Workspace> implements WorkspaceService {
-    private WorkspaceRepository repository;
+    private final WorkspaceRepository repo;
 
     public DefaultWorkspaceService(WorkspaceRepository workspaceRepository) {
-        this.repository = workspaceRepository;
+        this.repo = workspaceRepository;
     }
 
     public Workspace create(String workspaceTitle, String workspacePageName, String workspaceDescription) {
@@ -14,11 +14,11 @@ public class DefaultWorkspaceService extends DefaultPageService<Workspace> imple
 
         super.init(workspace, workspacePageName, workspaceTitle, workspaceDescription);
 
-        return workspace;
+        return save(workspace);
     }
 
     @Override
     protected WorkspaceRepository getRepository() {
-        return this.repository;
+        return this.repo;
     }
 }
