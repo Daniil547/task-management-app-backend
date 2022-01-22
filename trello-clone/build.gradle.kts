@@ -21,9 +21,9 @@ dependencies {
 
     implementation("org.flywaydb:flyway-core:8.2.2")
     implementation("com.zaxxer:HikariCP:5.0.0")
-    runtimeOnly("org.postgresql:postgresql:42.3.1")
+    runtimeOnly("com.h2database:h2:1.4.200")
+    //runtimeOnly("org.postgresql:postgresql:42.3.1")
 
-    testRuntimeOnly("com.h2database:h2:1.4.200")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
 }
