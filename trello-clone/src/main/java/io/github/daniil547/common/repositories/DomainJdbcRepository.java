@@ -122,7 +122,7 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
             int startingWith = fillCommonQueryParams(entity, stmnt, false);
             fillEntitySpecificQueryParams(entity, stmnt, startingWith);
 
-            stmnt.execute();
+            stmnt.executeUpdate();
 
             //in case there was some mutation on the DB side
             Optional<E> actuallyPersisted = fetchById(entity.getId());
@@ -205,7 +205,7 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
     public void deleteById(UUID uuid) {
         try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(deleteByIdQuery)) {
             stmnt.setObject(1, uuid);
-            stmnt.execute();
+            stmnt.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException("deleteById failed", e);
         }
