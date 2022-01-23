@@ -1,11 +1,15 @@
 package io.github.daniil547.user;
 
 import io.github.daniil547.common.services.DefaultPageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DefaultUserService extends DefaultPageService<User> implements UserService {
 
     UserRepository repo;
 
+    @Autowired
     public DefaultUserService(UserRepository userRepository) {
         this.repo = userRepository;
     }

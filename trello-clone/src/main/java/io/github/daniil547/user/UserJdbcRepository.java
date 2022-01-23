@@ -1,6 +1,8 @@
 package io.github.daniil547.user;
 
 import io.github.daniil547.common.repositories.PageJdbcRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -8,8 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Repository
 class UserJdbcRepository extends PageJdbcRepository<User> implements UserRepository {
 
+    @Autowired
     protected UserJdbcRepository(DataSource dataSource) {
         super(dataSource);
     }

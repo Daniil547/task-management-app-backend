@@ -1,6 +1,8 @@
 package io.github.daniil547.card;
 
 import io.github.daniil547.common.repositories.PageJdbcRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -9,8 +11,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 class CardJdbcRepository extends PageJdbcRepository<Card> implements CardRepository {
 
+    @Autowired
     public CardJdbcRepository(DataSource dataSource) {
         super(dataSource);
     }
