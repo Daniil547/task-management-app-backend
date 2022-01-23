@@ -17,6 +17,7 @@ dependencies {
     implementation("org.springframework:spring-context:5.3.15")
     implementation("org.springframework:spring-jdbc:5.3.15")
     implementation("org.springframework:spring-webmvc:5.3.15")
+    implementation("javax.annotation:javax.annotation-api:1.3.2")
 
     compileOnly("org.projectlombok:lombok:1.18.22")
     annotationProcessor("org.projectlombok:lombok:1.18.22")
