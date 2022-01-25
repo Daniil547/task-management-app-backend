@@ -17,6 +17,7 @@ public class DataSourceManager {
         cfg.setJdbcUrl(properties.getProperty("jdbc.url"));
         cfg.setUsername(properties.getProperty("jdbc.username"));
         cfg.setPassword(properties.getProperty("jdbc.password"));
+        cfg.setDriverClassName(properties.getProperty("jdbc.driver"));
 
         int maxConnections = Integer.parseInt(properties.getProperty("jdbc.pool.maxConnections"));
         cfg.setMaximumPoolSize(maxConnections);
