@@ -1,16 +1,16 @@
 create table cards
 (
     id               uuid primary key,
-    cardlist_id      uuid                           not null references cardlists (id),
-    position         smallint                       not null,
+    cardList_id      uuid        not null references cardlists (id),
+    position         smallint    not null,
 
-    unique (cardlist_id, position),
+    unique (cardList_id, position),
 
-    page_title       varchar(20)                    not null default 'My Card',
-    page_name        varchar(25)                    not null,
+    page_title       varchar(20) not null default 'My Card',
+    page_name        varchar(25) not null,
     page_description varchar(200),
 
-    unique (cardlist_id, page_name),
+    unique (cardList_id, page_name),
 
-    active           bool                           not null default true
+    active           bool        not null default true
 )
