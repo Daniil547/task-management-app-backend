@@ -16,13 +16,14 @@ import java.util.List;
 import java.util.Set;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-@Getter(AccessLevel.PACKAGE)
-@Setter(AccessLevel.PACKAGE)
+@Getter(AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class Workspace extends Page {
     private String companyWebsiteUrl;
     private WorkspaceVisibility visibility = WorkspaceVisibility.PRIVATE;
+
     private Set<Member> members = new HashSet<>();
     private List<Board> boards = new ArrayList<>();
 }

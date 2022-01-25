@@ -9,8 +9,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-@Getter(AccessLevel.PACKAGE)
-@Setter(AccessLevel.PACKAGE)
+@Getter(AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class User extends Page {
@@ -31,12 +31,12 @@ public class User extends Page {
     }
 
     @Override
-    public String getDescription() {
+    public String getPageDescription() {
         return getAbout();
     }
 
     @Override
-    public void setDescription(String about) {
+    public void setPageDescription(String about) {
         setAbout(about);
     }
 }

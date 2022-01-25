@@ -21,8 +21,8 @@ import java.util.Set;
 import java.util.UUID;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-@Getter(AccessLevel.PACKAGE)
-@Setter(AccessLevel.PACKAGE)
+@Getter(AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 public class Card extends Page {
