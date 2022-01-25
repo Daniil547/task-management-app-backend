@@ -16,7 +16,7 @@ public abstract class BaseTest {
         cfg.setPassword("test");
         cfg.setJdbcUrl("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=PostgreSql");
         cfg.setDriverClassName("org.h2.Driver");
-        cfg.setMaximumPoolSize(50);
+        cfg.setMaximumPoolSize(10);
         dataSource = new HikariDataSource(cfg);
         Flyway flyway = Flyway.configure()
                               .dataSource(dataSource)

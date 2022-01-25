@@ -3,6 +3,7 @@ package io.github.daniil547.common.repositories;
 import io.github.daniil547.common.domain.Domain;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -116,11 +117,12 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
 
     @Override
     public E insert(E entity) {
-        try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(insertQuery)) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmnt = conn.prepareStatement(insertQuery)) {
             int startingWith = fillCommonQueryParams(entity, stmnt, false);
             fillEntitySpecificQueryParams(entity, stmnt, startingWith);
 
-            stmnt.execute();
+            stmnt.executeUpdate();
 
             //in case there was some mutation on the DB side
             Optional<E> actuallyPersisted = fetchById(entity.getId());
@@ -140,7 +142,8 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
 
     @Override
     public E update(E entity) {
-        try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(updateQuery)) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmnt = conn.prepareStatement(updateQuery)) {
             int startingWith = fillCommonQueryParams(entity, stmnt, true);
             fillEntitySpecificQueryParams(entity, stmnt, startingWith);
 
@@ -161,7 +164,8 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
 
     @Override
     public Optional<E> fetchById(UUID uuid) {
-        try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(selectByIdQuery)) {
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmnt = conn.prepareStatement(selectByIdQuery)) {
             stmnt.setObject(1, uuid);
 
             ResultSet resultSet = stmnt.executeQuery();
@@ -201,7 +205,7 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
     public void deleteById(UUID uuid) {
         try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(deleteByIdQuery)) {
             stmnt.setObject(1, uuid);
-            stmnt.execute();
+            stmnt.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException("deleteById failed", e);
         }
