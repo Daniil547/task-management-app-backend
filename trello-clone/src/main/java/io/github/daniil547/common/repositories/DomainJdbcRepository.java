@@ -1,12 +1,14 @@
 package io.github.daniil547.common.repositories;
 
 import io.github.daniil547.common.domain.Domain;
+import io.github.daniil547.common.repositories.utils.CaseInsensitiveBeanPropertySqlParameterSource;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +21,7 @@ import java.util.UUID;
  * <p>
  * {@link #getTableName()} of the implementing entity<br>
  * {@link #getEntitySpecificColumns()} of that table<br>
- * {@link #fillEntitySpecificFields(ResultSet)} into the entity itself<br>
- * {@link #fillEntitySpecificQueryParams(Domain, PreparedStatement, Integer)} in the query<br><br>
+ * <p>
  * and optional<br>
  * {@link #tweakColumnNames(List)} - if some column names differ or new columns are used instead of default ones<br>
  *
@@ -52,39 +53,30 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
                 .formatted(
                         getTableName(),
                         commifyList(columns),
-                        parameterList(columns.size())
+                        parameterList(columns)
                           );
         this.updateQuery = """
                            UPDATE %s
                            SET (%s) =
                                (%s)
-                           WHERE id = ?"""
+                           WHERE id = :%s"""
                 .formatted(
                         getTableName(),
                         commifyList(columns.subList(1, columns.size())),
-                        parameterList(columns.size() - 1)
+                        parameterList(columns.subList(1, columns.size())),
+                        columns.get(0)
                           );
         this.selectByIdQuery = """
                                SELECT * FROM %s
-                               WHERE id = ?"""
+                               WHERE id = :id"""
                 .formatted(getTableName());
         this.selectAllQuery = """
                               SELECT * FROM %s"""
                 .formatted(getTableName());
         this.deleteByIdQuery = """
                                DELETE FROM %s
-                               WHERE id = ?"""
+                               WHERE id = :id"""
                 .formatted(getTableName());
-    }
-
-    Integer fillCommonQueryParams(E entity, PreparedStatement stmnt, Boolean idIsLast) throws SQLException {
-        int index = idIsLast ? stmnt.getParameterMetaData().getParameterCount() : 1;
-        stmnt.setObject(index, entity.getId());
-        return idIsLast ? 1 : 2;
-    }
-
-    void fillCommonEntityFields(E entity, ResultSet resultSet) throws SQLException {
-        entity.setId(resultSet.getObject("id", UUID.class));
     }
 
     List<String> getCommonColumns() {
@@ -99,115 +91,86 @@ public abstract class DomainJdbcRepository<E extends Domain> implements DomainRe
 
     protected abstract List<String> getEntitySpecificColumns();
 
-    protected abstract void fillEntitySpecificQueryParams(E entity, PreparedStatement stmnt, Integer startingWith) throws SQLException;
-
-    protected abstract E fillEntitySpecificFields(ResultSet resultSet) throws SQLException;
-
     private String commifyList(List<String> elements) {
         String res = String.join(",", elements);
 
         return res;
     }
 
-    private String parameterList(Integer parametersCount) {
-        String res = "?, ".repeat(parametersCount);
+    private String parameterList(List<String> elements) {
+        StringBuilder res = new StringBuilder();
+        for (String element : elements) {
+            res.append(":").append(element).append(", ");
+        }
 
         return res.substring(0, res.length() - 2); //excludes the last whitespace and comma
     }
 
     @Override
     public E insert(E entity) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmnt = conn.prepareStatement(insertQuery)) {
-            int startingWith = fillCommonQueryParams(entity, stmnt, false);
-            fillEntitySpecificQueryParams(entity, stmnt, startingWith);
+        NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
+        CaseInsensitiveBeanPropertySqlParameterSource parameterSource = new CaseInsensitiveBeanPropertySqlParameterSource(entity);
+        template.update(insertQuery, parameterSource);
 
-            stmnt.executeUpdate();
+        //in case there was some mutation on the DB side
+        Optional<E> actuallyPersisted = fetchById(entity.getId());
 
-            //in case there was some mutation on the DB side
-            Optional<E> actuallyPersisted = fetchById(entity.getId());
-
-            //we just inserted, so it shouldn't be empty
-            //and if insertion failed, these lines wouldn't execute
-            if (actuallyPersisted.isPresent()) {
-                return actuallyPersisted.get();
-            } else {
-                //but if they actually do, there must be something really wrong
-                throw new IllegalStateException("insert failed: immediate retrieval failed");
-            }
-        } catch (SQLException e) {
-            throw new IllegalStateException("insert failed", e);
+        //we just inserted, so it shouldn't be empty
+        //and if insertion failed, these lines wouldn't execute
+        if (actuallyPersisted.isPresent()) {
+            return actuallyPersisted.get();
+        } else {
+            //but if they actually do, there must be something really wrong
+            throw new IllegalStateException("insert failed: immediate retrieval failed");
         }
     }
 
     @Override
     public E update(E entity) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmnt = conn.prepareStatement(updateQuery)) {
-            int startingWith = fillCommonQueryParams(entity, stmnt, true);
-            fillEntitySpecificQueryParams(entity, stmnt, startingWith);
+        NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
 
-            int rowsUpdated = stmnt.executeUpdate();
+        int rowsUpdated = template.update(updateQuery, new CaseInsensitiveBeanPropertySqlParameterSource(entity));
 
-            if (rowsUpdated == 0) {
-                throw new IllegalStateException("update failed: no entity with given ID found");
-            }
-
-            //in case there was any mutation on the DB side.
-            //we updated already inserted value, so it shouldn't be empty
-            E actuallyPersisted = fetchById(entity.getId()).get();
-            return actuallyPersisted;
-        } catch (SQLException e) {
-            throw new IllegalStateException("update failed", e);
+        if (rowsUpdated == 0) {
+            throw new IllegalStateException("update failed: no entity with given ID found");
         }
+
+        //in case there was any mutation on the DB side.
+        //we updated already inserted value, so it shouldn't be empty
+        E actuallyPersisted = fetchById(entity.getId()).get();
+        return actuallyPersisted;
     }
 
     @Override
     public Optional<E> fetchById(UUID uuid) {
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmnt = conn.prepareStatement(selectByIdQuery)) {
-            stmnt.setObject(1, uuid);
+        NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
+        //this is ugly but BeanPropertyRowMapper<E> can't understand that it is expected to map to E and requires a Class<E> instance :facepalm:
+        Class<E> classOfE = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
-            ResultSet resultSet = stmnt.executeQuery();
-            if (resultSet.next()) {
-                E resEntity = fillEntitySpecificFields(resultSet);
-                fillCommonEntityFields(resEntity, resultSet);
-                return Optional.of(resEntity);
-            } else {
-                return Optional.empty();
-            }
-
-        } catch (SQLException e) {
-            throw new IllegalStateException("getchById failed", e);
+        E entity;
+        try {
+            entity = template.queryForObject(selectByIdQuery,
+                                             new MapSqlParameterSource("id", uuid),
+                                             new BeanPropertyRowMapper<E>(classOfE));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
         }
+
+        return Optional.of(entity);
     }
 
     @Override
     public List<E> fetchAll() {
-        try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(selectAllQuery)) {
-            ResultSet resultSet = stmnt.executeQuery();
-
-            List<E> resEntities = new ArrayList<>();
-            E tmpEntity;
-            while (resultSet.next()) {
-                tmpEntity = fillEntitySpecificFields(resultSet);
-                fillCommonEntityFields(tmpEntity, resultSet);
-                resEntities.add(tmpEntity);
-            }
-
-            return resEntities;
-        } catch (SQLException e) {
-            throw new IllegalStateException("fetchAll failed", e);
-        }
+        NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
+        //this is ugly but BeanPropertyRowMapper<E> can't understand that it is expected to map to E and requires a Class<E> instance :facepalm:
+        Class<E> classOfE = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        List<E> entities = template.query(selectAllQuery, new BeanPropertyRowMapper<E>(classOfE));
+        return entities;
     }
 
     @Override
     public void deleteById(UUID uuid) {
-        try (PreparedStatement stmnt = dataSource.getConnection().prepareStatement(deleteByIdQuery)) {
-            stmnt.setObject(1, uuid);
-            stmnt.executeUpdate();
-        } catch (SQLException e) {
-            throw new IllegalStateException("deleteById failed", e);
-        }
+        NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
+        template.update(deleteByIdQuery, new MapSqlParameterSource("id", uuid));
     }
 }
