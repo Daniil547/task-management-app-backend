@@ -9,8 +9,8 @@ public abstract class DefaultPageService<E extends Page> extends DefaultDomainSe
         super.initEntity(entity);
 
         entity.setPageName(pageName);
-        entity.setTitle(title);
-        entity.setDescription(descr);
+        entity.setPageTitle(title);
+        entity.setPageDescription(descr);
 
         return entity;
     }

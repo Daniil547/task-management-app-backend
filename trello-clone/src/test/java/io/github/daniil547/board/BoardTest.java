@@ -45,7 +45,7 @@ public class BoardTest extends BaseTest {
         assertAll(
                 () -> assertNotNull(board),
                 () -> assertEquals(PAGE_NAME, board.getPageName()),
-                () -> assertEquals(BOARD_TITLE, board.getTitle()),
+                () -> assertEquals(BOARD_TITLE, board.getPageTitle()),
                 () -> assertEquals(BoardVisibility.PRIVATE, board.getVisibility())
                  );
     }
@@ -67,8 +67,8 @@ public class BoardTest extends BaseTest {
 
 
         board.setPageName(newPageName);
-        board.setTitle(newTitle);
-        board.setDescription(newDescr);
+        board.setPageTitle(newTitle);
+        board.setPageDescription(newDescr);
         board.setVisibility(newVisibility);
 
         board = BOARD_SERVICE.update(board);
@@ -76,8 +76,8 @@ public class BoardTest extends BaseTest {
         assertAll(
                 () -> assertEquals(newPageName, board.getPageName()),
                 () -> assertEquals(newVisibility, board.getVisibility()),
-                () -> assertEquals(newTitle, board.getTitle()),
-                () -> assertEquals(newDescr, board.getDescription())
+                () -> assertEquals(newTitle, board.getPageTitle()),
+                () -> assertEquals(newDescr, board.getPageDescription())
                  );
     }
 

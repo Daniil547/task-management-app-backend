@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @Data
 public abstract class Page extends Domain {
-    private String title;
+    private String pageTitle;
     private String pageName;
-    private String description;
+    private String pageDescription;
 }

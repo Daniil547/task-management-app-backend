@@ -47,8 +47,8 @@ public class CardListTest extends BaseTest {
         assertAll(
                 () -> assertNotNull(cardList),
                 () -> assertEquals(PAGE_NAME, cardList.getPageName()),
-                () -> assertEquals(CARD_LIST_TITLE, cardList.getTitle()),
-                () -> assertEquals("", cardList.getDescription())
+                () -> assertEquals(CARD_LIST_TITLE, cardList.getPageTitle()),
+                () -> assertEquals("", cardList.getPageDescription())
                  );
     }
 
@@ -68,15 +68,15 @@ public class CardListTest extends BaseTest {
 
 
         cardList.setPageName(newPageName);
-        cardList.setTitle(newTitle);
-        cardList.setDescription(newDescr);
+        cardList.setPageTitle(newTitle);
+        cardList.setPageDescription(newDescr);
 
         cardList = CARD_LIST_SERVICE.update(cardList);
 
         assertAll(
                 () -> assertEquals(newPageName, cardList.getPageName()),
-                () -> assertEquals(newTitle, cardList.getTitle()),
-                () -> assertEquals(newDescr, cardList.getDescription())
+                () -> assertEquals(newTitle, cardList.getPageTitle()),
+                () -> assertEquals(newDescr, cardList.getPageDescription())
                  );
     }
 

@@ -50,7 +50,7 @@ public class UserTest extends BaseTest {
                 () -> assertEquals(EMAIL, user.getEmail()),
                 () -> assertEquals(FIRST_NAME, user.getFirstName()),
                 () -> assertEquals(LASTNAME, user.getLastName()),
-                () -> assertEquals(PROFILE_TITLE, user.getTitle())
+                () -> assertEquals(PROFILE_TITLE, user.getPageTitle())
                  );
     }
 
@@ -75,8 +75,8 @@ public class UserTest extends BaseTest {
         user.setEmail(newEmail);
         user.setFirstName(newFirstName);
         user.setLastName(newLastname);
-        user.setTitle(newProfileTitle);
-        user.setDescription(newDescr);
+        user.setPageTitle(newProfileTitle);
+        user.setPageDescription(newDescr);
 
         user = service.update(user);
 
@@ -85,8 +85,8 @@ public class UserTest extends BaseTest {
                 () -> assertEquals(newEmail, user.getEmail()),
                 () -> assertEquals(newFirstName, user.getFirstName()),
                 () -> assertEquals(newLastname, user.getLastName()),
-                () -> assertEquals(newProfileTitle, user.getTitle()),
-                () -> assertEquals(newDescr, user.getDescription())
+                () -> assertEquals(newProfileTitle, user.getPageTitle()),
+                () -> assertEquals(newDescr, user.getPageDescription())
                  );
     }
 

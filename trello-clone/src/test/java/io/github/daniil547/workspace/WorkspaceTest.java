@@ -39,7 +39,7 @@ public class WorkspaceTest extends BaseTest {
         assertAll(
                 () -> assertNotNull(workspace),
                 () -> assertEquals(PAGE_NAME, workspace.getPageName()),
-                () -> assertEquals(WORKSPACE_TITLE, workspace.getTitle()),
+                () -> assertEquals(WORKSPACE_TITLE, workspace.getPageTitle()),
                 () -> assertEquals(WorkspaceVisibility.PRIVATE, workspace.getVisibility())
                  );
     }
@@ -61,8 +61,8 @@ public class WorkspaceTest extends BaseTest {
 
 
         workspace.setPageName(newPageName);
-        workspace.setTitle(newTitle);
-        workspace.setDescription(newDescr);
+        workspace.setPageTitle(newTitle);
+        workspace.setPageDescription(newDescr);
         workspace.setVisibility(newVisibility);
 
         workspace = WORKSPACE_SERVICE.update(workspace);
@@ -70,8 +70,8 @@ public class WorkspaceTest extends BaseTest {
         assertAll(
                 () -> assertEquals(newPageName, workspace.getPageName()),
                 () -> assertEquals(newVisibility, workspace.getVisibility()),
-                () -> assertEquals(newTitle, workspace.getTitle()),
-                () -> assertEquals(newDescr, workspace.getDescription())
+                () -> assertEquals(newTitle, workspace.getPageTitle()),
+                () -> assertEquals(newDescr, workspace.getPageDescription())
                  );
     }
 
