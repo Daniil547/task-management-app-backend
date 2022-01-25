@@ -9,6 +9,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +56,7 @@ public class CardListTest extends BaseTest {
     @Test
     @Order(2)
     public void createConflicting() {
-        assertThrows(IllegalStateException.class,
+        assertThrows(DuplicateKeyException.class,
                      () -> CARD_LIST_SERVICE.create(PAGE_NAME, CARD_LIST_TITLE, "", board.getId(), 0));
     }
 
