@@ -3,6 +3,9 @@ package io.github.daniil547.workspace;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.github.daniil547.common.exceptions.EntityNotFoundException;
 import io.github.daniil547.common.util.JsonDtoView;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/workspaces")
+@Api(tags = "Workspace Resource", description = "CRUD endpoint for worksapces")
 public class WorkspaceWebMvcController {
     private final WorkspaceService service;
 
@@ -31,6 +35,9 @@ public class WorkspaceWebMvcController {
 
     //TODO add pagination after migration to Data JPA
     @GetMapping("/")
+    @ApiOperation(value = "Returns all the workspaces",
+                  notes = "Doesn't support pagination (yet)." +
+                          " If there are no workspaces, returns nothing")
     public ResponseEntity<List<WorkspaceDto>> getWorkspaces() {
         List<WorkspaceDto> res = new ArrayList<>();
         for (Workspace workspace : service.getAll()) {
@@ -41,7 +48,12 @@ public class WorkspaceWebMvcController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WorkspaceDto> getWorkspace(@PathVariable UUID id) {
+    @ApiOperation(value = "Returns one workspace with the given ID",
+                  notes = "If there's no workspace with the given ID returns 404.")
+    public ResponseEntity<WorkspaceDto> getWorkspace(@PathVariable
+                                                     @ApiParam(name = "id",
+                                                               value = "id (uuid) of a workspace you want get")
+                                                             UUID id) {
         Workspace unpackedWorkspace = service.getById(id)
                                              .orElseThrow(() -> new EntityNotFoundException(id));
 
@@ -50,8 +62,15 @@ public class WorkspaceWebMvcController {
     }
 
     @PostMapping("/")
+    @ApiOperation(value = "Creates one workspace from the given JSON",
+                  notes = "The JSON must NOT contain \"id\" field," +
+                          " it is to be set by the server. In case ID is" +
+                          " sent no error will be thrown, so make sure" +
+                          " to test client app for this")
     public ResponseEntity<WorkspaceDto> createWorkspace(@RequestBody
                                                         @JsonView(JsonDtoView.Creation.class)
+                                                        @ApiParam(name = "workspace",
+                                                                  value = "json representing a workspace, but with NO ID")
                                                                 WorkspaceDto dto) {
 
         Workspace workspace = service.create(dto);
@@ -61,7 +80,13 @@ public class WorkspaceWebMvcController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<WorkspaceDto> updateWorkspace(@RequestBody WorkspaceDto dto) {
+    @ApiOperation(value = "Updates one workspace with the values given JSON",
+                  notes = "The JSON must CONTAIN \"id\" field" +
+                          " for server to know which entity to update.")
+    public ResponseEntity<WorkspaceDto> updateWorkspace(@RequestBody
+                                                        @ApiParam(name = "workspace",
+                                                                  value = "json representing a workspace, WITH an ID")
+                                                                WorkspaceDto dto) {
         Workspace persistedUpdate = service.update(dto);
 
         return new ResponseEntity<>(service.dtoFromEntity(persistedUpdate),
@@ -70,7 +95,13 @@ public class WorkspaceWebMvcController {
 
     // TODO: implement a soft delete (archive) as well
     @DeleteMapping("/{id}")
-    public HttpStatus deleteWorkspace(@PathVariable UUID id) {
+    @ApiOperation(value = "Performs a hard delete of one workspace with the given ID",
+                  notes = "The JSON must CONTAIN \"id\" field" +
+                          " for server to know which entity to update.")
+    public HttpStatus deleteWorkspace(@PathVariable
+                                      @ApiParam(name = "id",
+                                                value = "id (uuid) of a workspace you want to delete")
+                                              UUID id) {
         service.deleteById(id);
 
         return HttpStatus.NO_CONTENT;
