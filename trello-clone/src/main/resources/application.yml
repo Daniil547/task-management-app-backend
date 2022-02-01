@@ -4,3 +4,7 @@ spring:
     username: test
     password: test
     driver-class-name: org.h2.Driver
+  #a workaround for springfox which doesn't support spring boot 2.6.x
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
