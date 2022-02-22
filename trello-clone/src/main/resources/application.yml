@@ -4,7 +4,17 @@ spring:
     username: test
     password: test
     driver-class-name: org.h2.Driver
-  #a workaround for springfox which doesn't support spring boot 2.6.x
   mvc:
     pathmatch:
+      #a workaround for springfox which doesn't support spring boot 2.6.x
       matching-strategy: ant_path_matcher
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate.format_sql: true
+    hibernate:
+      ddl-auto: validate
+  h2:
+    console:
+      enabled: true
