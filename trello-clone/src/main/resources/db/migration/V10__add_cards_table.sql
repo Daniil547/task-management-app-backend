@@ -2,7 +2,7 @@ create table cards
 (
     id               uuid primary key,
     cardList_id      uuid        not null references cardlists (id),
-    position         smallint    not null,
+    position         integer     not null,
 
     unique (cardList_id, position),
 

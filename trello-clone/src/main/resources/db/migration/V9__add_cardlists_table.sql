@@ -2,7 +2,7 @@ create table cardlists
 (
     id               uuid primary key,
     board_id         uuid                                      not null references boards (id),
-    position         smallint                                  not null,
+    position         integer                                   not null,
 
     unique (board_id, position),
 

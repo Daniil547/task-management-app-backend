@@ -5,7 +5,7 @@ create table boards
 
     page_title       varchar(20)      not null default 'My board',
     page_name        varchar(20)      not null,
-    page_description varchar(500),
+    page_description varchar(750),
 
     unique (workspace_id, page_name),
 
