@@ -1,42 +1,58 @@
 package io.github.daniil547.user;
 
 import io.github.daniil547.common.domain.Page;
-import lombok.AccessLevel;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-@Getter(AccessLevel.PUBLIC)
-@Setter(AccessLevel.PUBLIC)
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Data
+
+@Entity
+@Table(name = "users")
+@AttributeOverrides({@AttributeOverride(name = "pageName",
+                                        column = @Column(name = "username",
+                                                         unique = true,
+                                                         nullable = false)),
+                     @AttributeOverride(name = "pageDescription",
+                                        column = @Column(name = "about",
+                                                         length = 350)),
+                     @AttributeOverride(name = "pageTitle",
+                                        column = @Column(name = "profile_title",
+                                                         length = 50))})
+
 public class User extends Page {
+    @Column(nullable = false,
+            length = 20)
     private String firstName;
+    @Column(nullable = false,
+            length = 20)
     private String lastName;
-    private String username;
+    @Column(unique = true,
+            nullable = false,
+            length = 254)
     private String email;
-    private String about;
 
-    @Override
-    public String getPageName() {
-        return getUsername();
+    public String getUsername() {
+        return getPageName();
     }
 
-    @Override
-    public void setPageName(String username) {
-        setUsername(username);
+    public void setUsername(String username) {
+        setPageName(username);
     }
 
-    @Override
-    public String getPageDescription() {
-        return getAbout();
+    public String getAbout() {
+        return getPageDescription();
     }
 
-    @Override
-    public void setPageDescription(String about) {
-        setAbout(about);
+    public void setAbout(String about) {
+        setPageDescription(about);
     }
 }

@@ -1,27 +1,37 @@
 package io.github.daniil547.card_list;
 
-import io.github.daniil547.card.Card;
 import io.github.daniil547.common.domain.Page;
-import lombok.AccessLevel;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.UUID;
 
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-@Getter(AccessLevel.PUBLIC)
-@Setter(AccessLevel.PUBLIC)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class CardList extends Page {
-    private UUID boardId;
-    private Integer position;
+@Data
 
-    private List<Card> cards = new ArrayList<>();
+@Entity
+@Table(name = "cardlists",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"board_id", "position"})
+)
+@AttributeOverride(name = "pageDescription",
+                   column = @Column(length = 500))
+public class CardList extends Page {
+    /*@ManyToOne(targetEntity = Board.class)
+    @JoinColumn(name = "board_id",
+                referencedColumnName = "id")
+
+     */
+    @Column(name = "board_id")
+    private UUID boardId;
+    @Column
+    private Integer position;
+    @Column
     private Boolean active = true;
 }
