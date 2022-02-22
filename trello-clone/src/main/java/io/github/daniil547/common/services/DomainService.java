@@ -1,8 +1,14 @@
 package io.github.daniil547.common.services;
 
 import io.github.daniil547.common.domain.Domain;
+import io.github.daniil547.common.dto.DomainDto;
+import io.github.daniil547.common.repositories.DomainRepository;
+import io.github.daniil547.common.rest_api_search.SearchQueryParser;
 
-import java.util.UUID;
+public interface DomainService<D extends DomainDto, E extends Domain> {
 
-public interface DomainService<E extends Domain> extends Service<E, UUID> {
+
+    DomainRepository<E> repository();
+
+    SearchQueryParser<E> searchQueryParser();
 }

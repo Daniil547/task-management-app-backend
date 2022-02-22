@@ -4,10 +4,8 @@ import io.github.daniil547.common.services.DefaultPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
-public class DefaultCardService extends DefaultPageService<Card> implements CardService {
+public class DefaultCardService extends DefaultPageService<CardDto, Card> implements CardService {
     private final CardRepository repo;
 
     @Autowired
@@ -15,18 +13,8 @@ public class DefaultCardService extends DefaultPageService<Card> implements Card
         this.repo = cardRepository;
     }
 
-    public Card create(String cardPageName, String cardTitle, String cardDescr, UUID cardListId, Integer position) {
-        Card card = new Card();
-        super.init(card, cardPageName, cardTitle, cardDescr);
-
-        card.setCardListId(cardListId);
-        card.setPosition(position);
-
-        return save(card);
-    }
-
     @Override
-    protected CardRepository getRepository() {
+    public CardRepository repository() {
         return this.repo;
     }
 }

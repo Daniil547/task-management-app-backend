@@ -1,32 +1,16 @@
 package io.github.daniil547.common.services;
 
 import io.github.daniil547.common.domain.Page;
+import io.github.daniil547.common.dto.PageDto;
 import io.github.daniil547.common.repositories.PageRepository;
 
-import java.util.Optional;
+public abstract class DefaultPageService<D extends PageDto, E extends Page> extends DefaultDomainService<D, E> implements PageService<D, E> {
 
-public abstract class DefaultPageService<E extends Page> extends DefaultDomainService<E> implements PageService<E> {
-
-    protected E init(E entity, String pageName, String title, String descr) {
-        super.initEntity(entity);
-
-        entity.setPageName(pageName);
-        entity.setPageTitle(title);
-        entity.setPageDescription(descr);
-
-        return entity;
+    public DefaultPageService() {
+        super();
     }
 
     @Override
-    public Optional<E> getByPageName(String pageName) {
-        return getRepository().fetchByPageName(pageName);
-    }
+    public abstract PageRepository<E> repository();
 
-    @Override
-    public void deleteByPageName(String pageName) {
-        getRepository().deleteByPageName(pageName);
-    }
-
-    @Override
-    protected abstract PageRepository<E> getRepository();
 }
