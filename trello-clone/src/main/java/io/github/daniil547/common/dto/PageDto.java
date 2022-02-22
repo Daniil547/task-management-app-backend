@@ -1,7 +1,6 @@
-package io.github.daniil547.workspace;
+package io.github.daniil547.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import io.github.daniil547.common.dto.PageDto;
 import io.github.daniil547.common.util.JsonDtoView;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -12,13 +11,16 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @Data
 
-@ApiModel(value = "Workspace", parent = PageDto.class)
-public class WorkspaceDto extends PageDto {
-    @JsonView({JsonDtoView.Basic.class,
-               JsonDtoView.Creation.class})
-    private WorkspaceVisibility visibility;
+@ApiModel(parent = DomainDto.class)
 
+public abstract class PageDto extends DomainDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
-    private String companyWebsiteUrl;
+    private String pageName;
+    @JsonView({JsonDtoView.Basic.class,
+               JsonDtoView.Creation.class})
+    private String pageTitle;
+    @JsonView({JsonDtoView.Basic.class,
+               JsonDtoView.Creation.class})
+    private String pageDescription;
 }
