@@ -1,6 +1,7 @@
 package io.github.daniil547.common.controllers;
 
 import io.github.daniil547.common.exceptions.EntityNotFoundException;
+import io.github.daniil547.common.exceptions.MalformedRestSearchQueryException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,11 @@ public class WebExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Error<UUID>> onNotFound(EntityNotFoundException exc, HttpServletRequest request) {
         return new ResponseEntity<>(new Error<>(exc.getMessage(), exc.getBadId()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MalformedRestSearchQueryException.class)
+    public ResponseEntity<String> onBadMalformedRestSearchQuery(MalformedRestSearchQueryException exc) {
+        return new ResponseEntity<>(exc.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 
