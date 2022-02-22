@@ -1,6 +1,8 @@
 package io.github.daniil547.user;
 
 import io.github.daniil547.common.repositories.PageRepository;
+import org.springframework.stereotype.Repository;
 
-interface UserRepository extends PageRepository<User> {
+@Repository
+public interface UserRepository extends PageRepository<User> {
 }
