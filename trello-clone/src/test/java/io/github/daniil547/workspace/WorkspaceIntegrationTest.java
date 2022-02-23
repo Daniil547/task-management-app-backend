@@ -11,13 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.in;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
@@ -63,46 +67,46 @@ public class WorkspaceIntegrationTest extends AbstractIntegrationTest<WorkspaceD
                                               WorkspaceDto.class);
     }
 
-    /*
-        @Test
-        @Order(2)
-        public void testGetAllSearchInvalidQuery() throws Exception {
 
-            assertAll(
-                    () -> mockMvc.perform(MockMvcRequestBuilders
-                                                  .get("/workspaces/?search=")
-                                 ).andExpect(status().isBadRequest())
-                                 .andDo(MockMvcResultHandlers.log()),
-
-                    () -> mockMvc.perform(MockMvcRequestBuilders
-                                                  .get("/workspaces/?search=asd:dsa")
-                                 ).andExpect(status().isBadRequest())
-                                 .andDo(MockMvcResultHandlers.log()),
-
-                    () -> mockMvc.perform(MockMvcRequestBuilders
-                                                  .get("/workspaces/?search=pageName")
-                                 ).andExpect(status().isBadRequest())
-                                 .andDo(MockMvcResultHandlers.log()),
-
-                    () -> mockMvc.perform(MockMvcRequestBuilders
-                                                  .get("/workspaces/?search=pageName:,pageDescription:Doe")
-                                 ).andExpect(status().isBadRequest())
-                                 .andDo(MockMvcResultHandlers.log()),
-
-                    () -> mockMvc.perform(MockMvcRequestBuilders
-                                                  .get("/workspaces/?search=pageName:pageDescription:Doe")
-                                 ).andExpect(status().isBadRequest())
-                                 .andDo(MockMvcResultHandlers.log()),
-
-                    () -> mockMvc.perform(MockMvcRequestBuilders
-                                                  .get("/workspaces/?search=pageName:Bob,pageDescription:Doe|")
-                                 ).andExpect(status().isBadRequest())
-                                 .andDo(MockMvcResultHandlers.log())
-            );
-        }
-    */
     @Test
     @Order(2)
+    public void testGetAllSearchInvalidQuery() throws Exception {
+
+        assertAll(
+                () -> mockMvc.perform(MockMvcRequestBuilders
+                                              .get("/workspaces/?search=")
+                             ).andExpect(status().isBadRequest())
+                             .andDo(MockMvcResultHandlers.log()),
+
+                () -> mockMvc.perform(MockMvcRequestBuilders
+                                              .get("/workspaces/?search=asd:dsa")
+                             ).andExpect(status().isBadRequest())
+                             .andDo(MockMvcResultHandlers.log()),
+
+                () -> mockMvc.perform(MockMvcRequestBuilders
+                                              .get("/workspaces/?search=pageName")
+                             ).andExpect(status().isBadRequest())
+                             .andDo(MockMvcResultHandlers.log()),
+
+                () -> mockMvc.perform(MockMvcRequestBuilders
+                                              .get("/workspaces/?search=pageName:,pageDescription:Doe")
+                             ).andExpect(status().isBadRequest())
+                             .andDo(MockMvcResultHandlers.log()),
+
+                () -> mockMvc.perform(MockMvcRequestBuilders
+                                              .get("/workspaces/?search=pageName:pageDescription:Doe")
+                             ).andExpect(status().isBadRequest())
+                             .andDo(MockMvcResultHandlers.log()),
+
+                () -> mockMvc.perform(MockMvcRequestBuilders
+                                              .get("/workspaces/?search=pageName:Bob,pageDescription:Doe|")
+                             ).andExpect(status().isBadRequest())
+                             .andDo(MockMvcResultHandlers.log())
+        );
+    }
+
+    @Test
+    @Order(3)
     public void testGetAllSearchValidQuery() {
         List<String> ids = List.of(myWorkspace.getId().toString(),
                                    hisWorkspace.getId().toString());
@@ -125,7 +129,7 @@ public class WorkspaceIntegrationTest extends AbstractIntegrationTest<WorkspaceD
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     public void testGetById() throws Exception {
         super.testGetById(hisWorkspace.getId(),
                           jsonPath("$.id", is(hisWorkspace.getId().toString())),
@@ -137,7 +141,7 @@ public class WorkspaceIntegrationTest extends AbstractIntegrationTest<WorkspaceD
     }
 
     @Test
-    @Order(3)
+    @Order(5)
     public void testUpdate() throws Exception {
         myWorkspace.setPageTitle("NEW my workspace");
         myWorkspace.setPageName("NEWmyWorkspace");
@@ -154,7 +158,7 @@ public class WorkspaceIntegrationTest extends AbstractIntegrationTest<WorkspaceD
     }
 
     @Test
-    @Order(4)
+    @Order(6)
     public void testDelete() throws Exception {
         super.testDelete(hisWorkspace.getId());
     }

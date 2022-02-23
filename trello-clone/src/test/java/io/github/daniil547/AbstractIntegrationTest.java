@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public abstract class AbstractIntegrationTest<D extends DomainDto> {
     @Autowired
-    private MockMvc mockMvc;
+    protected MockMvc mockMvc;
     @Autowired
     protected ObjectMapper objectMapper;
     private final String endpoint;
