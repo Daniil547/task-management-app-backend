@@ -127,27 +127,13 @@ public class CardIntegrationTest extends AbstractIntegrationTest<CardDto> {
         firstCard.setPosition(2);
         firstCard.setPageDescription("Lorem ipsum dolor sit amet");
 
-        LabelDto labelDto = labelConverter.dtoFromEntity(
-                boardRepository.getById(
-                        cardListRepository.getById(
-                                firstCard.getCardListId()
-                        ).getBoardId()
-                ).getLabels().get(0));
-
-        firstCard.setAttachedLabelDtos(List.of(labelDto));
-
-
         super.testUpdate(firstCard,
                          jsonPath("$.id", is(firstCard.getId().toString())),
                          jsonPath("$.pageName", is(firstCard.getPageName())),
                          jsonPath("$.pageTitle", is(firstCard.getPageTitle())),
                          jsonPath("$.cardListId", is(firstCard.getCardListId().toString())),
                          jsonPath("$.position", is(firstCard.getPosition())),
-                         jsonPath("$.pageDescription", is(firstCard.getPageDescription())),
-                         jsonPath("$.attachedLabels.[0].id").exists(),
-                         jsonPath("$.attachedLabels.[0].name", is(labelDto.getName())),
-                         jsonPath("$.attachedLabels.[0].boardId", is(labelDto.getBoardId().toString())),
-                         jsonPath("$.attachedLabels.[0].color", is(labelDto.getColor()))
+                         jsonPath("$.pageDescription", is(firstCard.getPageDescription()))
         );
     }
 
@@ -163,7 +149,6 @@ public class CardIntegrationTest extends AbstractIntegrationTest<CardDto> {
                 ).getLabels().get(0));
 
         firstCard.setAttachedLabelDtos(List.of(labelDto));
-
 
         super.testUpdate(firstCard,
                          jsonPath("$.attachedLabels.[0].id").exists(),
