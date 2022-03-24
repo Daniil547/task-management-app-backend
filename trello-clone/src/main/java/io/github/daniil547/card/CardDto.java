@@ -10,6 +10,8 @@ import io.github.daniil547.common.util.JsonDtoView;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
@@ -34,7 +36,8 @@ public class CardDto extends PageDto {
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
-    @JsonProperty("attachedLabels")
+    @Getter(onMethod_ = @JsonProperty("attachedLabels"))
+    @Setter(onMethod_ = @JsonProperty("attachedLabels"))
     private List<LabelDto> attachedLabelDtos = new ArrayList<>();
 
     @JsonView({JsonDtoView.Basic.class,
@@ -43,11 +46,13 @@ public class CardDto extends PageDto {
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
-    @JsonProperty("checkLists")
+    @Getter(onMethod_ = @JsonProperty("checkLists"))
+    @Setter(onMethod_ = @JsonProperty("checkLists"))
     private List<CheckListDto> checkListDtos = new ArrayList<>();
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
-    @JsonProperty("reminder")
+    @Getter(onMethod_ = @JsonProperty("reminder"))
+    @Setter(onMethod_ = @JsonProperty("reminder"))
     private ReminderDto reminderDto;
 }

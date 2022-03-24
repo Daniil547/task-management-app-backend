@@ -55,13 +55,7 @@ public class BoardIntegrationTest extends AbstractIntegrationTest<BoardDto> {
     @Test
     @Order(1)
     public void testCreate() throws Exception {
-        MvcResult mvcResult = super.testCreate(firstBoard,
-                                               jsonPath("$.id").exists(),
-                                               jsonPath("$.pageName", is(firstBoard.getPageName())),
-                                               jsonPath("$.pageTitle", is(firstBoard.getPageTitle())),
-                                               jsonPath("$.workspaceId", is(firstBoard.getWorkspaceId().toString())),
-                                               jsonPath("$.visibility", is(firstBoard.getVisibility().toString())),
-                                               jsonPath("$.pageDescription").isEmpty());
+        MvcResult mvcResult = super.testCreate(firstBoard);
 
         firstBoard = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
                                             BoardDto.class);
@@ -97,14 +91,7 @@ public class BoardIntegrationTest extends AbstractIntegrationTest<BoardDto> {
     @Test
     @Order(3)
     public void testGetById() throws Exception {
-        super.testGetById(secondBoard.getId(),
-                          jsonPath("$.id", is(secondBoard.getId().toString())),
-                          jsonPath("$.pageName", is(secondBoard.getPageName())),
-                          jsonPath("$.pageTitle", is(secondBoard.getPageTitle())),
-                          jsonPath("$.workspaceId", is(secondBoard.getWorkspaceId().toString())),
-                          jsonPath("$.visibility", is(secondBoard.getVisibility().toString())),
-                          jsonPath("$.pageDescription").isEmpty()
-        );
+        super.testGetById(secondBoard);
     }
 
     @Test
@@ -122,18 +109,7 @@ public class BoardIntegrationTest extends AbstractIntegrationTest<BoardDto> {
 
         firstBoard.setLabelDtos(List.of(labelDto1));
 
-        super.testUpdate(firstBoard,
-                         jsonPath("$.id", is(firstBoard.getId().toString())),
-                         jsonPath("$.pageName", is(firstBoard.getPageName())),
-                         jsonPath("$.pageTitle", is(firstBoard.getPageTitle())),
-                         jsonPath("$.workspaceId", is(firstBoard.getWorkspaceId().toString())),
-                         jsonPath("$.visibility", is(firstBoard.getVisibility().toString())),
-                         jsonPath("$.pageDescription", is(firstBoard.getPageDescription())),
-                         jsonPath("$.labels.[0].id").exists(),
-                         jsonPath("$.labels.[0].name", is(labelDto1.getName())),
-                         jsonPath("$.labels.[0].boardId", is(firstBoard.getId().toString())),
-                         jsonPath("$.labels.[0].color", is(labelDto1.getColor()))
-        );
+        super.testUpdate(firstBoard);
     }
 
     @Test

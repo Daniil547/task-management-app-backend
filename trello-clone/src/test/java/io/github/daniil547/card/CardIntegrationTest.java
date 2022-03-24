@@ -71,13 +71,7 @@ public class CardIntegrationTest extends AbstractIntegrationTest<CardDto> {
     @Test
     @Order(1)
     public void testCreate() throws Exception {
-        MvcResult mvcResult = super.testCreate(firstCard,
-                                               jsonPath("$.id").exists(),
-                                               jsonPath("$.pageName", is(firstCard.getPageName())),
-                                               jsonPath("$.pageTitle", is(firstCard.getPageTitle())),
-                                               jsonPath("$.cardListId", is(firstCard.getCardListId().toString())),
-                                               jsonPath("$.position", is(firstCard.getPosition())),
-                                               jsonPath("$.pageDescription").isEmpty());
+        MvcResult mvcResult = super.testCreate(firstCard);
 
         firstCard = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
                                            CardDto.class);
@@ -108,14 +102,7 @@ public class CardIntegrationTest extends AbstractIntegrationTest<CardDto> {
     @Test
     @Order(3)
     public void testGetById() throws Exception {
-        super.testGetById(secondCard.getId(),
-                          jsonPath("$.id", is(secondCard.getId().toString())),
-                          jsonPath("$.pageName", is(secondCard.getPageName())),
-                          jsonPath("$.pageTitle", is(secondCard.getPageTitle())),
-                          jsonPath("$.cardListId", is(secondCard.getCardListId().toString())),
-                          jsonPath("$.position", is(secondCard.getPosition())),
-                          jsonPath("$.pageDescription").isEmpty()
-        );
+        super.testGetById(secondCard);
     }
 
     @Test
@@ -127,14 +114,7 @@ public class CardIntegrationTest extends AbstractIntegrationTest<CardDto> {
         firstCard.setPosition(2);
         firstCard.setPageDescription("Lorem ipsum dolor sit amet");
 
-        super.testUpdate(firstCard,
-                         jsonPath("$.id", is(firstCard.getId().toString())),
-                         jsonPath("$.pageName", is(firstCard.getPageName())),
-                         jsonPath("$.pageTitle", is(firstCard.getPageTitle())),
-                         jsonPath("$.cardListId", is(firstCard.getCardListId().toString())),
-                         jsonPath("$.position", is(firstCard.getPosition())),
-                         jsonPath("$.pageDescription", is(firstCard.getPageDescription()))
-        );
+        super.testUpdate(firstCard);
     }
 
     @Test
@@ -150,12 +130,7 @@ public class CardIntegrationTest extends AbstractIntegrationTest<CardDto> {
 
         firstCard.setAttachedLabelDtos(List.of(labelDto));
 
-        super.testUpdate(firstCard,
-                         jsonPath("$.attachedLabels.[0].id").exists(),
-                         jsonPath("$.attachedLabels.[0].name", is(labelDto.getName())),
-                         jsonPath("$.attachedLabels.[0].boardId", is(labelDto.getBoardId().toString())),
-                         jsonPath("$.attachedLabels.[0].color", is(labelDto.getColor()))
-        );
+        super.testUpdate(firstCard);
     }
 
     @Test
@@ -173,12 +148,7 @@ public class CardIntegrationTest extends AbstractIntegrationTest<CardDto> {
 
         firstCard.setCheckListDtos(List.of(checkList));
 
-        super.testUpdate(firstCard,
-                         jsonPath("$.checkLists.[0].id").exists(),
-                         jsonPath("$.checkLists.[0].name", is(checkList.getName())),
-                         jsonPath("$.checkLists.[0].cardId", is(checkList.getCardId().toString())),
-                         jsonPath("$.checkLists.[0].items.[0].description", is(checkableItem1.getDescription()))
-        );
+        super.testUpdate(firstCard);
     }
 
     @Test

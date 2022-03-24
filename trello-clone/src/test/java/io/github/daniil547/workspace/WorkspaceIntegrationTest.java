@@ -53,13 +53,7 @@ public class WorkspaceIntegrationTest extends AbstractIntegrationTest<WorkspaceD
     @Test
     @Order(1)
     public void testCreate() throws Exception {
-        MvcResult mvcResult = super.testCreate(myWorkspace,
-                                               jsonPath("$.id").exists(),
-                                               jsonPath("$.pageName", is(myWorkspace.getPageName())),
-                                               jsonPath("$.pageTitle", is(myWorkspace.getPageTitle())),
-                                               jsonPath("$.companyWebsiteUrl", is(myWorkspace.getCompanyWebsiteUrl())),
-                                               jsonPath("$.visibility", is(myWorkspace.getVisibility().toString())),
-                                               jsonPath("$.pageDescription").isEmpty());
+        MvcResult mvcResult = super.testCreate(myWorkspace);
 
         myWorkspace = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
                                              WorkspaceDto.class);
@@ -131,13 +125,7 @@ public class WorkspaceIntegrationTest extends AbstractIntegrationTest<WorkspaceD
     @Test
     @Order(4)
     public void testGetById() throws Exception {
-        super.testGetById(hisWorkspace.getId(),
-                          jsonPath("$.id", is(hisWorkspace.getId().toString())),
-                          jsonPath("$.pageName", is(hisWorkspace.getPageName())),
-                          jsonPath("$.pageTitle", is(hisWorkspace.getPageTitle())),
-                          jsonPath("$.companyWebsiteUrl", is(hisWorkspace.getCompanyWebsiteUrl())),
-                          jsonPath("$.visibility", is(hisWorkspace.getVisibility().toString())),
-                          jsonPath("$.pageDescription").isEmpty());
+        super.testGetById(hisWorkspace);
     }
 
     @Test
@@ -148,18 +136,12 @@ public class WorkspaceIntegrationTest extends AbstractIntegrationTest<WorkspaceD
         myWorkspace.setVisibility(WorkspaceVisibility.PUBLIC);
         myWorkspace.setPageDescription("Lorem ipsum dolor sit amet");
 
-        super.testUpdate(myWorkspace, jsonPath("$.id", is(myWorkspace.getId().toString())),
-                         jsonPath("$.pageName", is(myWorkspace.getPageName())),
-                         jsonPath("$.pageTitle", is(myWorkspace.getPageTitle())),
-                         jsonPath("$.companyWebsiteUrl", is(myWorkspace.getCompanyWebsiteUrl())),
-                         jsonPath("$.visibility", is(myWorkspace.getVisibility().toString())),
-                         jsonPath("$.pageDescription", is(myWorkspace.getPageDescription()))
-        );
+        super.testUpdate(myWorkspace);
     }
 
     @Test
     @Order(6)
-    public void testDelete() throws Exception {
+    public void testDelete() {
         super.testDelete(hisWorkspace.getId());
     }
 }

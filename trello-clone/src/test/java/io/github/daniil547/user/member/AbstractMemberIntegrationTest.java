@@ -86,7 +86,7 @@ public abstract class AbstractMemberIntegrationTest<E extends Member, P extends 
                         jsonPath("$.content", hasSize(1)),
                         jsonPath("$.content.[0].id", is(ids.get(0)))
                 })/*,
-                Pair.of("role:ADMIN", new ResultMatcher[]{
+                TODO Pair.of("role:ADMIN", new ResultMatcher[]{
                         jsonPath("$.content", hasSize(1)),
                         jsonPath("$.content.[0].id", is(ids.get(1)))
                 })*/
@@ -96,12 +96,7 @@ public abstract class AbstractMemberIntegrationTest<E extends Member, P extends 
     @Test
     @Order(3)
     public void testGetById() throws Exception {
-        super.testGetById(secondMember.getId(),
-                          jsonPath("$.id", is(secondMember.getId().toString())),
-                          jsonPath("$.placeId", is(secondMember.getPlaceId().toString())),
-                          jsonPath("$.userId", is(secondMember.getUserId().toString())),
-                          jsonPath("$.role", is(secondMember.getRole().toString()))
-        );
+        super.testGetById(secondMember);
     }
 
     @Test
@@ -109,12 +104,7 @@ public abstract class AbstractMemberIntegrationTest<E extends Member, P extends 
     public void testUpdate() throws Exception {
         secondMember.setRole(Role.MEMBER);
 
-        super.testUpdate(firstMember,
-                         jsonPath("$.id", is(firstMember.getId().toString())),
-                         jsonPath("$.placeId", is(firstMember.getPlaceId().toString())),
-                         jsonPath("$.userId", is(firstMember.getUserId().toString())),
-                         jsonPath("$.role", is(firstMember.getRole().toString()))
-        );
+        super.testUpdate(firstMember);
     }
 
     @Test

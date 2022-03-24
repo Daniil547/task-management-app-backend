@@ -54,13 +54,7 @@ public class CardListIntegrationTest extends AbstractIntegrationTest<CardListDto
     @Test
     @Order(1)
     public void testCreate() throws Exception {
-        MvcResult mvcResult = super.testCreate(firstCardList,
-                                               jsonPath("$.id").exists(),
-                                               jsonPath("$.pageName", is(firstCardList.getPageName())),
-                                               jsonPath("$.pageTitle", is(firstCardList.getPageTitle())),
-                                               jsonPath("$.boardId", is(firstCardList.getBoardId().toString())),
-                                               jsonPath("$.position", is(firstCardList.getPosition())),
-                                               jsonPath("$.pageDescription").isEmpty());
+        MvcResult mvcResult = super.testCreate(firstCardList);
 
         firstCardList = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
                                                CardListDto.class);
@@ -91,14 +85,7 @@ public class CardListIntegrationTest extends AbstractIntegrationTest<CardListDto
     @Test
     @Order(3)
     public void testGetById() throws Exception {
-        super.testGetById(secondCardList.getId(),
-                          jsonPath("$.id", is(secondCardList.getId().toString())),
-                          jsonPath("$.pageName", is(secondCardList.getPageName())),
-                          jsonPath("$.pageTitle", is(secondCardList.getPageTitle())),
-                          jsonPath("$.boardId", is(secondCardList.getBoardId().toString())),
-                          jsonPath("$.position", is(secondCardList.getPosition())),
-                          jsonPath("$.pageDescription").isEmpty()
-        );
+        super.testGetById(secondCardList);
     }
 
     @Test
@@ -109,14 +96,7 @@ public class CardListIntegrationTest extends AbstractIntegrationTest<CardListDto
         firstCardList.setPosition(2);
         firstCardList.setPageDescription("Lorem ipsum dolor sit amet");
 
-        super.testUpdate(firstCardList,
-                         jsonPath("$.id", is(firstCardList.getId().toString())),
-                         jsonPath("$.pageName", is(firstCardList.getPageName())),
-                         jsonPath("$.pageTitle", is(firstCardList.getPageTitle())),
-                         jsonPath("$.boardId", is(firstCardList.getBoardId().toString())),
-                         jsonPath("$.position", is(firstCardList.getPosition())),
-                         jsonPath("$.pageDescription", is(firstCardList.getPageDescription()))
-        );
+        super.testUpdate(firstCardList);
     }
 
     @Test

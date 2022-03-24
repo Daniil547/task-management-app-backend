@@ -8,6 +8,8 @@ import io.github.daniil547.common.util.JsonDtoView;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
@@ -28,7 +30,8 @@ public class CheckListDto extends DomainDto {
     private String name;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
-    @JsonProperty("items")
+    @Getter(onMethod_ = @JsonProperty("items"))
+    @Setter(onMethod_ = @JsonProperty("items"))
     private List<CheckableItemDto> itemDtos = new java.util.ArrayList<>();
 
 }

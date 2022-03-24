@@ -8,6 +8,8 @@ import io.github.daniil547.common.util.JsonDtoView;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class BoardDto extends PageDto {
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
-    @JsonProperty("labels")
+    @Getter(onMethod_ = @JsonProperty("labels"))
+    @Setter(onMethod_ = @JsonProperty("labels"))
     private List<LabelDto> labelDtos = new ArrayList<>();
 }

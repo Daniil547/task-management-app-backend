@@ -46,14 +46,7 @@ public class UserIntegrationTest extends AbstractIntegrationTest<UserDto> {
     @Test
     @Order(1)
     public void testCreate() throws Exception {
-        MvcResult mvcResult = super.testCreate(aliceDto,
-                                               jsonPath("$.id").exists(),
-                                               jsonPath("$.username", is(aliceDto.getUsername())),
-                                               jsonPath("$.firstName", is(aliceDto.getFirstName())),
-                                               jsonPath("$.lastName", is(aliceDto.getLastName())),
-                                               jsonPath("$.email", is(aliceDto.getEmail())),
-                                               jsonPath("$.about").isEmpty()
-        );
+        MvcResult mvcResult = super.testCreate(aliceDto);
 
         aliceDto = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
                                           UserDto.class);
@@ -91,13 +84,7 @@ public class UserIntegrationTest extends AbstractIntegrationTest<UserDto> {
     @Test
     @Order(3)
     public void testGetById() throws Exception {
-        super.testGetById(johnDto.getId(),
-                          jsonPath("$.id", is(johnDto.getId().toString())),
-                          jsonPath("$.username", is(johnDto.getUsername())),
-                          jsonPath("$.firstName", is(johnDto.getFirstName())),
-                          jsonPath("$.lastName", is(johnDto.getLastName())),
-                          jsonPath("$.email", is(johnDto.getEmail())),
-                          jsonPath("$.about").isEmpty());
+        super.testGetById(johnDto);
     }
 
     @Test
@@ -109,13 +96,7 @@ public class UserIntegrationTest extends AbstractIntegrationTest<UserDto> {
         aliceDto.setEmail("alicia@robertson.com");
         aliceDto.setAbout("Lorem ipsum dolor sit amet");
 
-        super.testUpdate(aliceDto, jsonPath("$.id", is(aliceDto.getId().toString())),
-                         jsonPath("$.username", is(aliceDto.getUsername())),
-                         jsonPath("$.firstName", is(aliceDto.getFirstName())),
-                         jsonPath("$.lastName", is(aliceDto.getLastName())),
-                         jsonPath("$.email", is(aliceDto.getEmail())),
-                         jsonPath("$.about", is(aliceDto.getAbout()))
-        );
+        super.testUpdate(aliceDto);
     }
 
     @Test

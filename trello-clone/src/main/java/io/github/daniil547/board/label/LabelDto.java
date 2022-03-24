@@ -21,7 +21,7 @@ public class LabelDto extends DomainDto {
     private UUID boardId;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
-    private int color;
+    private Integer color;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     private String name;
