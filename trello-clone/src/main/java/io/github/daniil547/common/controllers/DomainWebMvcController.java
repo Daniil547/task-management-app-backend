@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 public abstract class DomainWebMvcController<D extends DomainDto, E extends Domain> {
@@ -75,6 +76,8 @@ public abstract class DomainWebMvcController<D extends DomainDto, E extends Doma
                                               value = "json representing a object, but with NO ID",
                                               required = true)
                                     @Valid D dto) {
+        service().validate(dto);
+
         E createdEntity = service().repository().insert(converter().entityFromDto(dto));
 
         return new ResponseEntity<>(converter().dtoFromEntity(createdEntity),
@@ -90,6 +93,8 @@ public abstract class DomainWebMvcController<D extends DomainDto, E extends Doma
                                               value = "json representing a object, WITH an ID",
                                               required = true)
                                     @Valid D dto) {
+        service().validate(dto);
+
         E persistedUpdate = service().repository().update(converter().entityFromDto(dto));
 
         return new ResponseEntity<>(converter().dtoFromEntity(persistedUpdate),

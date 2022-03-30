@@ -1,5 +1,6 @@
 package io.github.daniil547.common.controllers;
 
+import io.github.daniil547.common.exceptions.CustomValidationFailureException;
 import io.github.daniil547.common.exceptions.EntityNotFoundException;
 import io.github.daniil547.common.exceptions.MalformedRestSearchQueryException;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,11 @@ public class WebExceptionHandler {
         return new ResponseEntity<>(new Error<>(exc.getMessage(), "id", exc.getPayload()), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(CustomValidationFailureException.class)
+    public ResponseEntity<Error<Object>> onCustomValidationFailure(CustomValidationFailureException exc) {
+        return new ResponseEntity<>(new Error<>(exc.getMessage(), exc.getField(), exc.getPayload()), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<Error<?>>> onJavaxValidationFailure(MethodArgumentNotValidException exc) {
         List<Error<?>> result = new ArrayList<>();
@@ -31,7 +37,7 @@ public class WebExceptionHandler {
         exc.getBindingResult()
            .getFieldErrors()
            .forEach(e -> result.add(
-                            new Error<>(e.getDefaultMessage(), //despite the name it's actually just a messag; messages you specify in javax annotations are also injected in that field
+                            new Error<>(e.getDefaultMessage(), //despite the name it's actually just a message; messages you specify in javax annotations are also injected in that field
                                         e.getField().substring(e.getField().indexOf('.') + 1), //don't include dto's name
                                         e.getRejectedValue())
                     )

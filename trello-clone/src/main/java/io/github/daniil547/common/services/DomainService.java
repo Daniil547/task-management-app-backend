@@ -7,6 +7,7 @@ import io.github.daniil547.common.rest_api_search.SearchQueryParser;
 
 public interface DomainService<D extends DomainDto, E extends Domain> {
 
+    void validate(D dto);
 
     DomainRepository<E> repository();
 
