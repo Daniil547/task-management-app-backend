@@ -27,5 +27,8 @@ public class CheckableItemDto extends DomainDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     private String description;
+    @JsonView({JsonDtoView.Basic.class,
+               JsonDtoView.Creation.class})
+    private Integer position;
 
 }

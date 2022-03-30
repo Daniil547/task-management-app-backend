@@ -28,6 +28,11 @@ public class CheckListDto extends DomainDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     private String name;
+
+    @JsonView({JsonDtoView.Basic.class,
+               JsonDtoView.Creation.class})
+    private Integer position;
+
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @Getter(onMethod_ = @JsonProperty("items"))

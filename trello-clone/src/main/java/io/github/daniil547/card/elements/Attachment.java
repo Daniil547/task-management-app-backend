@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.UUID;
 
-//TODO figure out how to transfer files over the network and implement this
+//TODO add multipart
 
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

@@ -19,6 +19,7 @@ public class CheckListConverter extends DomainConverter<CheckListDto, CheckList>
 
         checkList.setCardId(dto.getCardId());
         checkList.setName(dto.getName());
+        checkList.setPosition(dto.getPosition());
         checkList.setItems(dto.getItemDtos()
                               .stream()
                               .map(checkableItemConverter::entityFromDto)
@@ -33,6 +34,7 @@ public class CheckListConverter extends DomainConverter<CheckListDto, CheckList>
 
         dto.setCardId(entity.getCardId());
         dto.setName(entity.getName());
+        dto.setPosition(entity.getPosition());
         dto.setItemDtos(entity.getItems()
                               .stream()
                               .map(checkableItemConverter::dtoFromEntity)

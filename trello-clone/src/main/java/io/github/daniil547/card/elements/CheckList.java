@@ -26,7 +26,7 @@ public class CheckList extends Domain {
     @Column
     private UUID cardId;
     @Column
-    private Short position;
+    private Integer position;
 
     @OneToMany(fetch = FetchType.EAGER,
                mappedBy = "checkListId",

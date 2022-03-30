@@ -25,5 +25,5 @@ public class CheckableItem extends Domain {
     @Column(name = "checklist_id")
     private UUID checkListId;
     @Column
-    private Short position;
+    private Integer position;
 }
