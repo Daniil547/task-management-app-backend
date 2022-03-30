@@ -10,6 +10,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 @EqualsAndHashCode(callSuper = true)
@@ -18,25 +21,32 @@ import java.time.ZonedDateTime;
 
 @ApiModel(value = "Reminder", parent = PageDto.class)
 public class ReminderDto extends DomainDto {
-    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSSXXX'['VV']'";
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSSXXX'['VV']'"; // format equivalent to ZonedDateTime's toString()
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @Size(min = 3)
     private String message;
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @JsonFormat(pattern = DATE_FORMAT)
+    @NotNull
+    @FutureOrPresent
     private ZonedDateTime startOrDue;
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @JsonFormat(pattern = DATE_FORMAT)
+    @FutureOrPresent
     private ZonedDateTime end;
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @JsonFormat(pattern = DATE_FORMAT)
+    @NotNull
+    @FutureOrPresent
     private ZonedDateTime remindOn;
 
     @JsonView({JsonDtoView.Basic.class,

@@ -21,6 +21,23 @@ public class WebExceptionHandler {
         return new ResponseEntity<>(new Error<>(exc.getMessage(), exc.getBadId()), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<List<Error<?>>> onJavaxValidationFailure(MethodArgumentNotValidException exc) {
+        List<Error<?>> result = new ArrayList<>();
+
+        exc.getBindingResult()
+           .getFieldErrors()
+           .forEach(e -> result.add(
+                            new Error<>(e.getDefaultMessage(), //despite the name it's actually just a messag; messages you specify in javax annotations are also injected in that field
+                                        e.getField().substring(e.getField().indexOf('.') + 1), //don't include dto's name
+                                        e.getRejectedValue())
+                    )
+           );
+
+        return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(MalformedRestSearchQueryException.class)
     public ResponseEntity<String> onBadMalformedRestSearchQuery(MalformedRestSearchQueryException exc) {
         return new ResponseEntity<>(exc.getMessage(), HttpStatus.BAD_REQUEST);
@@ -28,13 +45,10 @@ public class WebExceptionHandler {
 
 
     @Getter
+    @AllArgsConstructor
     public static class Error<B> {
-        private final String message;
-        private final B body;
-
-        public Error(String message, B body) {
-            this.message = message;
-            this.body = body;
-        }
+        private final String constraint;
+        private final String property;
+        private final B value;
     }
 }

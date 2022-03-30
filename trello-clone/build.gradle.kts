@@ -18,6 +18,7 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework:spring-jdbc")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
     implementation("com.github.javafaker:javafaker:1.0.2")

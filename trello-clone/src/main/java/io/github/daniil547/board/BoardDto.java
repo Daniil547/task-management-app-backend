@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +27,7 @@ public class BoardDto extends PageDto {
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
     private UUID workspaceId;
 
     @JsonView({JsonDtoView.Basic.class,
@@ -39,5 +42,5 @@ public class BoardDto extends PageDto {
                JsonDtoView.Creation.class})
     @Getter(onMethod_ = @JsonProperty("labels"))
     @Setter(onMethod_ = @JsonProperty("labels"))
-    private List<LabelDto> labelDtos = new ArrayList<>();
+    private List<@Valid LabelDto> labelDtos = new ArrayList<>();
 }

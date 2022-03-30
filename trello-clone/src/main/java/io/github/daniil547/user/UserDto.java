@@ -10,6 +10,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
@@ -19,12 +23,18 @@ import lombok.ToString;
 public class UserDto extends PageDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @Size(min = 3)
     private String firstName;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @Size(min = 3)
     private String lastName;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @Email
     private String email;
 
     @JsonView({JsonDtoView.Basic.class,

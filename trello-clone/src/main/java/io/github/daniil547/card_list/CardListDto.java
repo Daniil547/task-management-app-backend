@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -19,10 +21,13 @@ public class CardListDto extends PageDto {
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
     private UUID boardId;
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @PositiveOrZero
     private Integer position;
 
     @JsonView({JsonDtoView.Basic.class,

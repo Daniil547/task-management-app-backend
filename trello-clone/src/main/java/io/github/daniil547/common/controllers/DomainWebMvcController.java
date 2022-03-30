@@ -53,7 +53,8 @@ public abstract class DomainWebMvcController<D extends DomainDto, E extends Doma
                   notes = "If there's no object with the given ID returns 404.")
     public ResponseEntity<D> getById(@PathVariable
                                      @ApiParam(name = "id",
-                                               value = "id (uuid) of an object you want to get")
+                                               value = "id (uuid) of an object you want to get",
+                                               required = true)
                                              UUID id) {
         E unpackedEntity = service().repository().findById(id)
                                     .orElseThrow(() -> new EntityNotFoundException(id));
@@ -71,9 +72,9 @@ public abstract class DomainWebMvcController<D extends DomainDto, E extends Doma
     public ResponseEntity<D> create(@RequestBody
                                     @JsonView(JsonDtoView.Creation.class)
                                     @ApiParam(name = "object",
-                                              value = "json representing a object, but with NO ID")
-                                            D dto) {
-
+                                              value = "json representing a object, but with NO ID",
+                                              required = true)
+                                    @Valid D dto) {
         E createdEntity = service().repository().insert(converter().entityFromDto(dto));
 
         return new ResponseEntity<>(converter().dtoFromEntity(createdEntity),
@@ -86,8 +87,9 @@ public abstract class DomainWebMvcController<D extends DomainDto, E extends Doma
                           " for server to know which entity to update.")
     public ResponseEntity<D> update(@RequestBody
                                     @ApiParam(name = "object",
-                                              value = "json representing a object, WITH an ID")
-                                            D dto) {
+                                              value = "json representing a object, WITH an ID",
+                                              required = true)
+                                    @Valid D dto) {
         E persistedUpdate = service().repository().update(converter().entityFromDto(dto));
 
         return new ResponseEntity<>(converter().dtoFromEntity(persistedUpdate),
@@ -98,10 +100,11 @@ public abstract class DomainWebMvcController<D extends DomainDto, E extends Doma
     @ApiOperation(value = "Performs a hard delete of one object with the given ID",
                   notes = "The JSON must CONTAIN \"id\" field" +
                           " for server to know which entity to update.")
-    public ResponseEntity deleteById(@PathVariable
-                                     @ApiParam(name = "id",
-                                               value = "id (uuid) of an object you want to delete")
-                                             UUID id) {
+    public ResponseEntity<?> deleteById(@PathVariable
+                                        @ApiParam(name = "id",
+                                                  value = "id (uuid) of an object you want to delete",
+                                                  required = true)
+                                                UUID id) {
         service().repository().deleteById(id);
 
         return ResponseEntity.noContent().build();

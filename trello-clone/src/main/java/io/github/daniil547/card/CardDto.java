@@ -13,7 +13,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.UniqueElements;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,30 +33,35 @@ public class CardDto extends PageDto {
     private Boolean active = true;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
     private UUID cardListId;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @PositiveOrZero
     private Integer position;
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @Getter(onMethod_ = @JsonProperty("attachedLabels"))
     @Setter(onMethod_ = @JsonProperty("attachedLabels"))
-    private List<LabelDto> attachedLabelDtos = new ArrayList<>();
+    private List<@Valid LabelDto> attachedLabelDtos = new ArrayList<>();
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @UniqueElements
     private List<UUID> assignedMembers = new ArrayList<>();
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @Getter(onMethod_ = @JsonProperty("checkLists"))
     @Setter(onMethod_ = @JsonProperty("checkLists"))
-    private List<CheckListDto> checkListDtos = new ArrayList<>();
+    private List<@Valid CheckListDto> checkListDtos = new ArrayList<>();
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @Getter(onMethod_ = @JsonProperty("reminder"))
     @Setter(onMethod_ = @JsonProperty("reminder"))
+    @Valid
     private ReminderDto reminderDto;
 }

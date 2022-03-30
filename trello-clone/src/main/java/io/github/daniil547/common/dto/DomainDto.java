@@ -9,5 +9,5 @@ import java.util.UUID;
 @Data
 public abstract class DomainDto {
     @JsonView(JsonDtoView.Basic.class)
-    private UUID id;
+    private UUID id; // might be null e.g. when entity is to be created
 }

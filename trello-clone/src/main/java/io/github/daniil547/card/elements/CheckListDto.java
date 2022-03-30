@@ -12,6 +12,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,20 +27,25 @@ import java.util.UUID;
 public class CheckListDto extends DomainDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
     private UUID cardId;
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @Size(min = 3)
     private String name;
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @PositiveOrZero
     private Integer position;
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @Getter(onMethod_ = @JsonProperty("items"))
     @Setter(onMethod_ = @JsonProperty("items"))
-    private List<CheckableItemDto> itemDtos = new java.util.ArrayList<>();
+    private List<@Valid CheckableItemDto> itemDtos = new java.util.ArrayList<>();
 
 }

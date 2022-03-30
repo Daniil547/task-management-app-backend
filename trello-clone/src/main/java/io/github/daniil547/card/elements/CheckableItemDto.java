@@ -9,6 +9,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -19,6 +22,7 @@ import java.util.UUID;
 public class CheckableItemDto extends DomainDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
     private UUID checkListId;
 
     @JsonView({JsonDtoView.Basic.class,
@@ -26,9 +30,13 @@ public class CheckableItemDto extends DomainDto {
     private Boolean checked = false;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @Size(min = 3)
     private String description;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    @PositiveOrZero
     private Integer position;
 
 }

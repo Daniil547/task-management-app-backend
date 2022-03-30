@@ -8,15 +8,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.validation.Valid;
+
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Data
 
 @ApiModel(value = "Workspace", parent = PageDto.class)
+
+@Valid
 public class WorkspaceDto extends PageDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
-    private WorkspaceVisibility visibility;
+    private WorkspaceVisibility visibility = WorkspaceVisibility.PRIVATE;
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
