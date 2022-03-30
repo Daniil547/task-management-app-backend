@@ -9,7 +9,8 @@ public class ReminderConverter extends DomainConverter<ReminderDto, Reminder> {
     protected Reminder transferEntitySpecificFieldsFromDto(ReminderDto dto) {
         Reminder reminder = new Reminder();
 
-        reminder.setCardId(dto.getCardId());
+        reminder.setMessage(dto.getMessage());
+        reminder.setStartOrDue(dto.getStartOrDue());
         reminder.setRemindOn(dto.getRemindOn());
         reminder.setCompleted(dto.getCompleted());
         reminder.setEnd(dto.getEnd());
@@ -21,7 +22,8 @@ public class ReminderConverter extends DomainConverter<ReminderDto, Reminder> {
     protected ReminderDto transferDtoSpecificFieldsFromEntity(Reminder entity) {
         ReminderDto dto = new ReminderDto();
 
-        dto.setCardId(entity.getCardId());
+        dto.setMessage(entity.getMessage());
+        dto.setStartOrDue(entity.getStartOrDue());
         dto.setRemindOn(entity.getRemindOn());
         dto.setCompleted(entity.getCompleted());
         dto.setEnd(entity.getEnd().orElse(null));

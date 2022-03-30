@@ -12,5 +12,7 @@ create table cards
 
     unique (cardList_id, page_name),
 
-    active           bool        not null default true
+    active           bool        not null default true,
+
+    reminder_id      uuid        null references reminders (id)
 )

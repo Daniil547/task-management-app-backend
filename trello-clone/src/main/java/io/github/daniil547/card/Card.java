@@ -74,7 +74,6 @@ public class Card extends Page {
               optional = true,
               fetch = FetchType.EAGER,
               orphanRemoval = true,
-              mappedBy = "cardId",
               cascade = CascadeType.ALL)
     private Reminder reminder;
 }
