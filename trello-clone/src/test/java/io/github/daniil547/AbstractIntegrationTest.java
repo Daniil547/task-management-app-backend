@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.ParameterizedType;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -59,6 +60,20 @@ public abstract class AbstractIntegrationTest<D extends DomainDto> {
                       ).andExpect(status().isCreated())
                       .andExpect(content().contentType(APPLICATION_JSON))
                       .andExpectAll(checkJsonFields(dto))
+                      .andExpectAll(matchers)
+                      .andDo(MockMvcResultHandlers.log())
+                      .andReturn();
+    }
+
+    public MvcResult testCreateFailure(D dto,
+                                       ResultMatcher... matchers) throws Exception {
+        String jsonContent = objectMapper.writeValueAsString(dto);
+
+        return mockMvc.perform(MockMvcRequestBuilders
+                                       .post(endpoint)
+                                       .contentType(APPLICATION_JSON)
+                                       .content(jsonContent)
+                      ).andExpect(content().contentType(APPLICATION_JSON))
                       .andExpectAll(matchers)
                       .andDo(MockMvcResultHandlers.log())
                       .andReturn();
@@ -108,6 +123,20 @@ public abstract class AbstractIntegrationTest<D extends DomainDto> {
                       .andReturn();
     }
 
+    public MvcResult testUpdateFailure(D dto,
+                                       ResultMatcher... matchers) throws Exception {
+        String jsonContent = objectMapper.writeValueAsString(dto);
+
+        return mockMvc.perform(MockMvcRequestBuilders
+                                       .put(endpoint)
+                                       .contentType(APPLICATION_JSON)
+                                       .content(jsonContent)
+                      ).andExpect(content().contentType(APPLICATION_JSON))
+                      .andExpectAll(matchers)
+                      .andDo(MockMvcResultHandlers.log())
+                      .andReturn();
+    }
+
     public void testDelete(UUID id) {
         assertAll(
                 () -> mockMvc.perform(MockMvcRequestBuilders.delete(endpoint + id.toString())
@@ -149,6 +178,11 @@ public abstract class AbstractIntegrationTest<D extends DomainDto> {
 
                 if (Collection.class.isAssignableFrom(propertyClass)) { // check if the property is a collection
                     Class<?> typeOfElements = (Class<?>) ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0];
+
+                    if (((Collection) valueBehindGetter).isEmpty()) {
+
+                    }
+
                     int i = 0;
                     if (DomainDto.class.isAssignableFrom(typeOfElements)) { // check if the collection contains DTOs
                         for (DomainDto element : (Collection<DomainDto>) valueBehindGetter) {
@@ -158,7 +192,9 @@ public abstract class AbstractIntegrationTest<D extends DomainDto> {
                         return;
                     }
                 }
-                if (propertyClass.isEnum() || UUID.class.isAssignableFrom(propertyClass)) { //JsonPath can recognize equal enums and UUIDs as equal only when they are converted to strings
+                if (propertyClass.isEnum()
+                    || UUID.class.isAssignableFrom(propertyClass)
+                    || ZonedDateTime.class.isAssignableFrom(propertyClass)) { //JsonPath can recognize equal enums and UUIDs as equal only when they are converted to strings
                     valueBehindGetter = valueBehindGetter.toString();
                 }
                 if (DomainDto.class.isAssignableFrom(propertyClass)) {

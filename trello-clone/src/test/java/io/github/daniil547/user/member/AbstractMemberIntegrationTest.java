@@ -65,11 +65,6 @@ public abstract class AbstractMemberIntegrationTest<E extends Member, P extends 
                                               MemberDto.class);
     }
 
-    // TODO use dataproviders
-    // TODO use jsonpath predicates
-    // TODO factor out common code
-
-
     @Test
     @Order(2)
     public void testGetAllSearchValidQuery() {
