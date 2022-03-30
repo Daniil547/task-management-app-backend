@@ -2,14 +2,17 @@ package io.github.daniil547.common.controllers;
 
 import io.github.daniil547.common.exceptions.EntityNotFoundException;
 import io.github.daniil547.common.exceptions.MalformedRestSearchQueryException;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @ControllerAdvice
@@ -17,8 +20,8 @@ import java.util.UUID;
 public class WebExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Error<UUID>> onNotFound(EntityNotFoundException exc, HttpServletRequest request) {
-        return new ResponseEntity<>(new Error<>(exc.getMessage(), exc.getBadId()), HttpStatus.NOT_FOUND);
+    public ResponseEntity<Error<UUID>> onNotFound(EntityNotFoundException exc) {
+        return new ResponseEntity<>(new Error<>(exc.getMessage(), "id", exc.getPayload()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -39,7 +42,7 @@ public class WebExceptionHandler {
 
 
     @ExceptionHandler(MalformedRestSearchQueryException.class)
-    public ResponseEntity<String> onBadMalformedRestSearchQuery(MalformedRestSearchQueryException exc) {
+    public ResponseEntity<String> onMalformedRestSearchQuery(MalformedRestSearchQueryException exc) {
         return new ResponseEntity<>(exc.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
