@@ -17,7 +17,6 @@ public class NoUpdateOrCreateForArchivedCardValidator implements CustomValidator
 
     @Override
     public void validate(CardDto newCard) {
-        System.out.println("////////////////////////||||||||||||||||||||||||///////////////////////");
         if (!newCard.getActive()) {
             UUID id = newCard.getId();
             if (id == null) {
