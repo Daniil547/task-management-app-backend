@@ -19,7 +19,7 @@ public abstract class PageDto extends DomainDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @NotNull
-    @Size(min = 3)
+    @Size(min = 3, max = 50)
     private String pageName;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})

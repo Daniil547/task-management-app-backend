@@ -24,12 +24,12 @@ public class UserDto extends PageDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @NotNull
-    @Size(min = 3)
+    @Size(min = 3, max = 20)
     private String firstName;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @NotNull
-    @Size(min = 3)
+    @Size(min = 3, max = 20)
     private String lastName;
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})

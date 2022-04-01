@@ -26,7 +26,7 @@ public class ReminderDto extends DomainDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @NotNull
-    @Size(min = 3)
+    @Size(min = 3, max = 60)
     private String message;
 
     @JsonView({JsonDtoView.Basic.class,

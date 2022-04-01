@@ -1,8 +1,8 @@
 create table cardlists
 (
     id               uuid primary key,
-    board_id         uuid                                      not null references boards (id),
-    position         integer                                   not null,
+    board_id         uuid        not null references boards (id),
+    position         integer     not null,
 
     unique (board_id, position),
 
@@ -11,11 +11,11 @@ create table cardlists
     last_updated_when timestamp with time zone,
     */
 
-    page_title       varchar(20)                               not null default 'My List',
-    page_name        varchar(25)                               not null,
+    page_title       varchar(50) not null default 'My List',
+    page_name        varchar(25) not null,
     page_description varchar(300),
 
     unique (board_id, page_name),
 
-    active           bool                                      not null default TRUE
+    active           bool        not null default TRUE
 )

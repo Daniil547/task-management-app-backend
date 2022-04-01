@@ -33,7 +33,7 @@ public class CheckListDto extends DomainDto {
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
     @NotNull
-    @Size(min = 3)
+    @Size(min = 3, max = 60)
     private String name;
 
     @JsonView({JsonDtoView.Basic.class,

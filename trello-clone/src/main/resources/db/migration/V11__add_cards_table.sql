@@ -6,7 +6,7 @@ create table cards
 
     unique (cardList_id, position),
 
-    page_title       varchar(20) not null default 'My Card',
+    page_title       varchar(50) not null default 'My Card',
     page_name        varchar(25) not null,
     page_description varchar(200),
 
