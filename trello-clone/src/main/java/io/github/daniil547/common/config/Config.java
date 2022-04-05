@@ -8,9 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+import java.io.PrintStream;
 
 @Configuration
 @ComponentScan("io.github.daniil547")
+@EnableScheduling
 public class Config {
     @Bean
     @Primary
@@ -21,5 +25,11 @@ public class Config {
         objectMapper.configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
 
         return objectMapper;
+    }
+
+    @Bean
+    @Primary
+    public PrintStream consoleOut() {
+        return System.out;
     }
 }
