@@ -1,10 +1,10 @@
 package io.github.daniil547.card;
 
 import io.github.daniil547.board.label.LabelConverter;
-import io.github.daniil547.card.elements.CheckListConverter;
-import io.github.daniil547.card.elements.Reminder;
-import io.github.daniil547.card.elements.ReminderConverter;
-import io.github.daniil547.card.elements.ReminderDto;
+import io.github.daniil547.card.elements.check_list.CheckListConverter;
+import io.github.daniil547.card.elements.reminder.Reminder;
+import io.github.daniil547.card.elements.reminder.ReminderConverter;
+import io.github.daniil547.card.elements.reminder.ReminderDto;
 import io.github.daniil547.common.services.PageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package io.github.daniil547.card.elements;
+package io.github.daniil547.card.elements.attachment;
 
 import io.github.daniil547.common.domain.Domain;
 import lombok.Data;

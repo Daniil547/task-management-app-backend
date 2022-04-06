@@ -1,4 +1,4 @@
-package io.github.daniil547.card.elements;
+package io.github.daniil547.card.elements.check_list;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import io.github.daniil547.common.dto.DomainDto;

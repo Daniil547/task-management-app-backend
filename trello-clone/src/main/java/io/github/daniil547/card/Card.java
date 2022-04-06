@@ -1,8 +1,8 @@
 package io.github.daniil547.card;
 
 import io.github.daniil547.board.label.Label;
-import io.github.daniil547.card.elements.CheckList;
-import io.github.daniil547.card.elements.Reminder;
+import io.github.daniil547.card.elements.check_list.CheckList;
+import io.github.daniil547.card.elements.reminder.Reminder;
 import io.github.daniil547.common.domain.Page;
 import io.github.daniil547.user.member.BoardMember;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package io.github.daniil547.card.elements;
+package io.github.daniil547.card.elements.reminder;
 
 import io.github.daniil547.card.CardDto;
 import io.github.daniil547.common.exceptions.CustomValidationFailureException;

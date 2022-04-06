@@ -1,4 +1,4 @@
-package io.github.daniil547.card.elements;
+package io.github.daniil547.card.elements.reminder;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
