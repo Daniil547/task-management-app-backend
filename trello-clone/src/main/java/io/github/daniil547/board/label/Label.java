@@ -1,19 +1,28 @@
 package io.github.daniil547.board.label;
 
 import io.github.daniil547.common.domain.Domain;
-import lombok.AccessLevel;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-@Getter(AccessLevel.PACKAGE)
-@Setter(AccessLevel.PACKAGE)
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.UUID;
+
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Data
+
+@Entity
+@Table(name = "labels")
 public class Label extends Domain {
+
+    @Column
+    private UUID boardId;
+
+    @Column
     private String name;
-    private int color; //int is better than String
+    @Column
+    private int color;
 }

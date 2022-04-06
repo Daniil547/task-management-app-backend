@@ -1,20 +1,16 @@
 package io.github.daniil547.common.services;
 
 import io.github.daniil547.common.domain.Page;
+import io.github.daniil547.common.dto.PageDto;
 import io.github.daniil547.common.repositories.PageRepository;
 
-public abstract class DefaultPageService<E extends Page> extends DefaultDomainService<E> implements PageService<E> {
+public abstract class DefaultPageService<D extends PageDto, E extends Page> extends DefaultDomainService<D, E> implements PageService<D, E> {
 
-    protected E init(E entity, String pageName, String title, String descr) {
-        super.initEntity(entity);
-
-        entity.setPageName(pageName);
-        entity.setTitle(title);
-        entity.setDescription(descr);
-
-        return entity;
+    public DefaultPageService() {
+        super();
     }
 
     @Override
-    protected abstract PageRepository<E> getRepository();
+    public abstract PageRepository<E> repository();
+
 }

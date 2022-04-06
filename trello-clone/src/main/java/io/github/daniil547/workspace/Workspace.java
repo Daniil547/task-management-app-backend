@@ -1,28 +1,30 @@
 package io.github.daniil547.workspace;
 
-import io.github.daniil547.board.Board;
 import io.github.daniil547.common.domain.Page;
-import io.github.daniil547.user.member.Member;
-import lombok.AccessLevel;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-@Getter(AccessLevel.PACKAGE)
-@Setter(AccessLevel.PACKAGE)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Data
+
+@Entity
+@Table(name = "workspaces")
+@AttributeOverride(name = "pageDescription",
+                   column = @Column(length = 1000))
 public class Workspace extends Page {
+    @Column(length = 75)
     private String companyWebsiteUrl;
+
+    @Column(columnDefinition = "enum('PUBLIC', 'PRIVATE')")
+    @Enumerated(EnumType.STRING)
     private WorkspaceVisibility visibility = WorkspaceVisibility.PRIVATE;
-    private Set<Member> members = new HashSet<>();
-    private List<Board> boards = new ArrayList<>();
 }

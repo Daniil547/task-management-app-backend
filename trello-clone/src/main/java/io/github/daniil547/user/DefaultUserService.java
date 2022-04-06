@@ -1,29 +1,28 @@
 package io.github.daniil547.user;
 
 import io.github.daniil547.common.services.DefaultPageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class DefaultUserService extends DefaultPageService<User> implements UserService {
+@Service
+public class DefaultUserService extends DefaultPageService<UserDto, User> implements UserService {
 
-    UserRepository repo;
+    private final UserRepository repo;
+    private final UserSearchQueryParser searchQueryParser;
 
-    public DefaultUserService(UserRepository userRepository) {
+    @Autowired
+    public DefaultUserService(UserRepository userRepository, UserSearchQueryParser searchQueryParser) {
         this.repo = userRepository;
-    }
-
-    public User create(String username, String firstName, String lastname, String email) {
-        User user = new User();
-
-        super.init(user, username, firstName + " " + lastname + "'s Profile", "");
-
-        user.setFirstName(firstName);
-        user.setLastName(lastname);
-        user.setEmail(email);
-
-        return save(user);
+        this.searchQueryParser = searchQueryParser;
     }
 
     @Override
-    protected UserRepository getRepository() {
+    public UserRepository repository() {
         return this.repo;
+    }
+
+    @Override
+    public UserSearchQueryParser searchQueryParser() {
+        return this.searchQueryParser;
     }
 }
