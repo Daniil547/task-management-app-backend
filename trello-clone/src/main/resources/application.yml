@@ -18,3 +18,10 @@ spring:
   h2:
     console:
       enabled: true
+  servlet:
+    multipart:
+      max-file-size: "1GB"
+      max-request-size: "1030MB"
+file-storage:
+  file-storage-place: DATABASE
+  file-system-directory: file-storage

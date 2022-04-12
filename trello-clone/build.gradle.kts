@@ -23,6 +23,8 @@ dependencies {
     implementation("javax.annotation:javax.annotation-api:1.3.2")
     implementation("com.github.javafaker:javafaker:1.0.2")
 
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
     compileOnly("org.projectlombok:lombok:1.18.22")
     annotationProcessor("org.projectlombok:lombok:1.18.22")
 
