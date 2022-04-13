@@ -36,6 +36,7 @@ public class ScheduledReminderExecutionTest {
     @BeforeAll
     public void init() {
         MockitoAnnotations.openMocks(reminderAction);
+        Mockito.clearInvocations(reminderAction);
     }
 
     @Test

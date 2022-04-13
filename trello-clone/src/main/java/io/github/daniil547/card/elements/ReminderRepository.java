@@ -14,10 +14,10 @@ import java.util.UUID;
 @Repository
 @Component
 public interface ReminderRepository extends JpaRepository<Reminder, UUID> {
-    @Query("update Reminder r set r.goneOff = true where r.remindOn < ?1")
+    @Query("update Reminder r set r.goneOff = true where r.id in ?1")
     @Modifying
     @Transactional
-    void deactivateAllExecuted(ZonedDateTime beforeThis);
+    void deactivateAll(Iterable<UUID> reminders);
 
     List<Reminder> findAllByGoneOffFalseAndRemindOnBefore(ZonedDateTime beforeThis);
 }
