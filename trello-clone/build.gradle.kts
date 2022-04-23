@@ -43,3 +43,18 @@ tasks.getByName<Test>("test") {
     useJUnitPlatform()
     finalizedBy(tasks.withType(JacocoReport::class))
 }
+
+sourceSets {
+    create("unit") {
+        test {
+            java {
+                compileClasspath += sourceSets.main.get().output
+                runtimeClasspath += sourceSets.main.get().output
+                srcDir("src/unit/java")
+            }
+            resources {
+                srcDir("src/unit/resources")
+            }
+        }
+    }
+}
