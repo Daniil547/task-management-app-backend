@@ -10,6 +10,7 @@ public class ReminderConverter extends DomainConverter<ReminderDto, Reminder> {
         Reminder reminder = new Reminder();
 
         reminder.setMessage(dto.getMessage());
+        reminder.setAction(dto.getAction());
         reminder.setStartOrDue(dto.getStartOrDue());
         reminder.setRemindOn(dto.getRemindOn());
         reminder.setCompleted(dto.getCompleted());
@@ -23,6 +24,7 @@ public class ReminderConverter extends DomainConverter<ReminderDto, Reminder> {
         ReminderDto dto = new ReminderDto();
 
         dto.setMessage(entity.getMessage());
+        dto.setAction(entity.getAction());
         dto.setStartOrDue(entity.getStartOrDue());
         dto.setRemindOn(entity.getRemindOn());
         dto.setCompleted(entity.getCompleted());

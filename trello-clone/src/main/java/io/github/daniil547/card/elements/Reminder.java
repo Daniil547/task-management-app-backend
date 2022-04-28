@@ -28,8 +28,11 @@ public class Reminder extends Domain {
     private Boolean completed = false;
     @Column
     private String message;
+    @Column(columnDefinition = "enum('SEND_EMAIL')")
+    private ReminderActionIdentifier action;
     @Column
     private Boolean goneOff = false;
+
 
     public Optional<ZonedDateTime> getEnd() {
         return Optional.ofNullable(end);

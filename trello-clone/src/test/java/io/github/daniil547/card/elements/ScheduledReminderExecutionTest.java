@@ -28,15 +28,15 @@ public class ScheduledReminderExecutionTest {
     @Autowired
     private ReminderRepository reminderRepository;
     @Autowired
-    private ReminderAction reminderAction;
+    private ReminderActionHandler reminderActionHandler;
     @Autowired
     private ReminderConverter reminderConverter;
 
 
     @BeforeAll
     public void init() {
-        MockitoAnnotations.openMocks(reminderAction);
-        Mockito.clearInvocations(reminderAction);
+        MockitoAnnotations.openMocks(reminderActionHandler);
+        Mockito.clearInvocations(reminderActionHandler);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ScheduledReminderExecutionTest {
 
         Thread.sleep(60000);
 
-        Mockito.verify(reminderAction).execute(ArgumentMatchers.any());
+        Mockito.verify(reminderActionHandler).execute(ArgumentMatchers.any());
 
         assertTrue(reminderRepository.findById(reminder.getId()).get().getGoneOff());
     }

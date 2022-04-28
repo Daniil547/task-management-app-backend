@@ -19,6 +19,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+
+    implementation("org.springframework.integration:spring-integration-mail:5.5.11")
+    implementation("org.springframework:spring-context-support")
+
     implementation("org.springframework:spring-jdbc")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
     implementation("com.github.javafaker:javafaker:1.0.2")

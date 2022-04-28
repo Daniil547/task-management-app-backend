@@ -18,3 +18,9 @@ spring:
   h2:
     console:
       enabled: true
+reminders:
+  actions:
+    smtp:
+      sender-address: noreply-reminder@asdad.com
+  execution:
+    parallelism: 5

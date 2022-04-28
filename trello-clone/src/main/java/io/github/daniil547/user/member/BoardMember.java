@@ -19,7 +19,6 @@ import java.util.UUID;
        uniqueConstraints = {@UniqueConstraint(columnNames = {"board_id",
                                                              "user_id"})}
 )
-
 public class BoardMember extends Member {
     @Column(name = "board_id")
     private UUID boardId;

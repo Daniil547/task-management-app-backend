@@ -14,5 +14,6 @@ create table cards
 
     active           bool        not null default true,
 
-    reminder_id      uuid        null references reminders (id)
+    reminder_id      uuid unique null references reminders (id)
+/*per postgre's manual: UNIQUE NULLABLE constraint allows any number of rows to be null*/
 )
