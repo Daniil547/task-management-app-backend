@@ -7,18 +7,20 @@ import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Component
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 public class ScheduledReminderExecutor {
-
+    private ReminderRepository reminderRepository;
     ReminderExecutorUtilityService reminderExecutorUtilityService;
 
     @Scheduled(fixedRate = 1, timeUnit = TimeUnit.MINUTES)
     public void executeActiveReminders() {
         // find rems that should go of during the next minute
         ZonedDateTime oneMinuteAhead = ZonedDateTime.now().plus(1, ChronoUnit.MINUTES);
-        reminderExecutorUtilityService.doExecuteReminders(oneMinuteAhead);
+        List<Reminder> dueReminders = reminderRepository.findAllByGoneOffFalseAndRemindOnBefore(oneMinuteAhead);
+        reminderExecutorUtilityService.doExecuteReminders(dueReminders);
     }
 }

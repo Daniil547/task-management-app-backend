@@ -7,15 +7,18 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @AllArgsConstructor(onConstructor_ = {@Autowired})
 @Component
 public class OnStartupReminderExecutor implements ApplicationListener<ContextRefreshedEvent> {
+    private ReminderRepository reminderRepository;
     ReminderExecutorUtilityService reminderExecutorUtilityService;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         ZonedDateTime now = ZonedDateTime.now();
-        reminderExecutorUtilityService.doExecuteReminders(now);
+        List<Reminder> dueReminders = reminderRepository.findAllByGoneOffFalseAndRemindOnBefore(now);
+        reminderExecutorUtilityService.doExecuteReminders(dueReminders);
     }
 }
