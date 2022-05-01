@@ -61,8 +61,8 @@ public class ReminderExecutorUtilityService {
             try {
                 task.getValue().get();
                 remsToDeactivate.add(task.getKey());
-            } catch (
-                    InterruptedException e) { // logging is expected to be at least WARN at all times, so concatenation should be ok
+            } catch (InterruptedException e) {
+                // logging is expected to be at least WARN at all times, so concatenation should be ok
                 log.error("Failed to execute reminder " + task.getKey(), e);
                 throw new RuntimeException("Failed to execute reminder" + task.getKey() + ": thread was interrupted", e);
             } catch (ExecutionException e) { // same here
@@ -71,7 +71,7 @@ public class ReminderExecutorUtilityService {
             }
         }
 
-        int unexecutedAmount = remsToDeactivate.size() - reminders.size();
+        int unexecutedAmount = reminders.size() - remsToDeactivate.size();
 
         log.info("{} reminders were executed in parallel (of {}); there were {} errors",
                  remsToDeactivate.size(), reminders.size(), unexecutedAmount);

@@ -2,15 +2,18 @@ package io.github.daniil547.card.elements;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
-@Primary
+@ConditionalOnProperty(prefix = "reminders",
+                       name = "executors.on-startup.mode",
+                       havingValue = "parallel",
+                       matchIfMissing = true)
 @Component
 public class OnStartupParallelReminderExecutor implements ApplicationListener<ContextRefreshedEvent> {
     private final ReminderRepository reminderRepository;

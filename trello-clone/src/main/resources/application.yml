@@ -19,6 +19,13 @@ spring:
     console:
       enabled: true
 reminders:
+  executors:
+    on-startup:
+      mode:
+        parallel
+    scheduled:
+      mode:
+        parallel
   actions:
     smtp:
       sender-address: noreply-reminder@asdad.com
