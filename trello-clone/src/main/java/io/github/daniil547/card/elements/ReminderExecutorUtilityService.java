@@ -2,6 +2,7 @@ package io.github.daniil547.card.elements;
 
 import io.github.daniil547.common.domain.Domain;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 @AllArgsConstructor(onConstructor_ = @Autowired)
 public class ReminderExecutorUtilityService {
@@ -28,6 +30,9 @@ public class ReminderExecutorUtilityService {
                                                 .peek(this::doExecuteReminder)
                                                 .map(Domain::getId)
                                                 .toList();
+
+        log.info("{} reminders were executed sequentially (of {}); there were {} errors",
+                 executedReminders.size(), reminders.size(), executedReminders.size() - reminders.size());
 
         deactivate(executedReminders);
     }
@@ -56,18 +61,28 @@ public class ReminderExecutorUtilityService {
             try {
                 task.getValue().get();
                 remsToDeactivate.add(task.getKey());
-            } catch (InterruptedException e) {
+            } catch (
+                    InterruptedException e) { // logging is expected to be at least WARN at all times, so concatenation should be ok
+                log.error("Failed to execute reminder " + task.getKey(), e);
                 throw new RuntimeException("Failed to execute reminder" + task.getKey() + ": thread was interrupted", e);
-            } catch (ExecutionException e) {
+            } catch (ExecutionException e) { // same here
+                log.error("Failed to execute reminder " + task.getKey(), e);
                 throw new RuntimeException("Failed to execute reminder" + task.getKey() + ": execution resulted in exception", e);
             }
         }
 
-        System.out.println(executedRemCount);
+        int unexecutedAmount = remsToDeactivate.size() - reminders.size();
+
+        log.info("{} reminders were executed in parallel (of {}); there were {} errors",
+                 remsToDeactivate.size(), reminders.size(), unexecutedAmount);
+
+        if (unexecutedAmount > 0) {
+            log.warn("{} reminders weren't sent", unexecutedAmount);
+        }
 
         deactivate(remsToDeactivate);
 
-        return executedRemCount.get();
+        return remsToDeactivate.size();
     }
 
     public void doExecuteReminder(Reminder rem) {

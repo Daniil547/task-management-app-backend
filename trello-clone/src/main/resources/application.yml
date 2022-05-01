@@ -24,3 +24,6 @@ reminders:
       sender-address: noreply-reminder@asdad.com
   execution:
     parallelism: 5
+logging:
+  level:
+    root: info
