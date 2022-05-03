@@ -1,6 +1,7 @@
 package io.github.daniil547.common.util;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 
 public final class Reflection {
     public static Object invokeMethod(Object onObject, String methodName, Object... args) {
@@ -16,5 +17,9 @@ public final class Reflection {
         } catch (InvocationTargetException e) {
             throw new IllegalStateException(onObject.getClass().getName() + "." + methodName + "threw an exception", e);
         }
+    }
+
+    public static Class<?>[] getGenerics(Class<?> clazz) {
+        return (Class<?>[]) ((ParameterizedType) clazz.getGenericSuperclass()).getActualTypeArguments();
     }
 }

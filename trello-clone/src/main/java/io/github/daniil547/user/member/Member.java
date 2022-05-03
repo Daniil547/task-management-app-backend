@@ -28,5 +28,5 @@ public abstract class Member extends Domain {
     @Enumerated(EnumType.STRING)
     private Role role = Role.GUEST;
 
-    protected abstract UUID getPlace();
+    protected abstract UUID getPlaceId();
 }

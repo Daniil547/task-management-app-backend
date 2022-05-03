@@ -25,7 +25,7 @@ public class BoardMember extends Member {
     private UUID boardId;
 
     @Override
-    protected UUID getPlace() {
+    protected UUID getPlaceId() {
         return this.getBoardId();
     }
 }

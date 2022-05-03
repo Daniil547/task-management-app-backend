@@ -9,11 +9,12 @@ import io.github.daniil547.common.services.DomainService;
 import io.github.daniil547.common.util.JsonDtoView;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.tuple.Triple;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,30 +24,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class DomainWebMvcController<D extends DomainDto, E extends Domain> {
+
+    protected Map<
+            Triple<UUID, String, Pageable>, // key type
+            ResponseEntity<Page<D>>         // value type
+            > cacheForGetAll;
+
     //public abstract SearchQueryParser<E> searchQueryParser();
     public abstract DomainService<D, E> service();
 
     public abstract DomainConverter<D, E> converter();
+
+    /**
+     * That's a really uncool workaround.
+     *
+     * @param userId   id of the requester
+     * @param search   search criteria
+     * @param pageable pageable query
+     * @return response entity to return to the user
+     */
+    protected abstract ResponseEntity<Page<D>> handleGetAllWithRespectToUser(UUID userId, String search, Pageable pageable);
 
     @GetMapping("/")
     @ApiOperation(value = "Returns all objects of this type that match given search criteria",
                   notes = "Supports pagination." +
                           " If no matching objects found, returns an empty OK response")
     public ResponseEntity<Page<D>> getAll(@RequestParam(value = "search",
-                                                        required = false) String search,
-                                          Pageable pageable) {
+                                                        required = false)
+                                          String search,
+                                          Pageable pageable,
+                                          Authentication authentication) {
 
+        UUID userId = (UUID) authentication.getPrincipal();
 
-        Specification<E> spec = service().searchQueryParser().parse(search);
-
-        Page<D> res = service().repository()
-                               .findAll(spec, pageable)
-                               .map(converter()::dtoFromEntity);
-
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return handleGetAllWithRespectToUser(userId, search, pageable);
     }
 
     @GetMapping("/{id}")
@@ -56,7 +71,7 @@ public abstract class DomainWebMvcController<D extends DomainDto, E extends Doma
                                      @ApiParam(name = "id",
                                                value = "id (uuid) of an object you want to get",
                                                required = true)
-                                             UUID id) {
+                                     UUID id) {
         E unpackedEntity = service().repository().findById(id)
                                     .orElseThrow(() -> new EntityNotFoundException(id));
 
@@ -109,7 +124,7 @@ public abstract class DomainWebMvcController<D extends DomainDto, E extends Doma
                                         @ApiParam(name = "id",
                                                   value = "id (uuid) of an object you want to delete",
                                                   required = true)
-                                                UUID id) {
+                                        UUID id) {
         service().repository().deleteById(id);
 
         return ResponseEntity.noContent().build();

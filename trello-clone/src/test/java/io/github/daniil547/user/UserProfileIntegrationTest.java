@@ -20,27 +20,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
-public class UserIntegrationTest extends AbstractIntegrationTest<UserDto> {
-    private UserDto aliceDto;
-    private UserDto johnDto;
+public class UserProfileIntegrationTest extends AbstractIntegrationTest<UserProfileDto> {
+    private UserProfileDto aliceDto;
+    private UserProfileDto johnDto;
 
-    public UserIntegrationTest() {
+    public UserProfileIntegrationTest() {
         super("/users/");
     }
 
     @BeforeAll
     public void init() {
-        aliceDto = new UserDto();
+        aliceDto = new UserProfileDto();
         aliceDto.setFirstName("Alice");
         aliceDto.setLastName("Doe");
-        aliceDto.setEmail("alice@doe.com");
         aliceDto.setUsername("alice1337");
 
-        johnDto = new UserDto();
+        johnDto = new UserProfileDto();
         johnDto.setFirstName("John");
         johnDto.setLastName("Doe");
         johnDto.setUsername("john01134");
-        johnDto.setEmail("john@doe.com");
     }
 
     @Test
@@ -49,9 +47,9 @@ public class UserIntegrationTest extends AbstractIntegrationTest<UserDto> {
         MvcResult mvcResult = super.testCreate(aliceDto);
 
         aliceDto = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
-                                          UserDto.class);
+                                          UserProfileDto.class);
         johnDto = objectMapper.readValue(super.testCreate(johnDto).getResponse().getContentAsString(),
-                                         UserDto.class);
+                                         UserProfileDto.class);
     }
 
     @Test
@@ -93,7 +91,6 @@ public class UserIntegrationTest extends AbstractIntegrationTest<UserDto> {
         aliceDto.setFirstName("Alicia");
         aliceDto.setLastName("Robertson");
         aliceDto.setUsername("aliciaCool");
-        aliceDto.setEmail("alicia@robertson.com");
         aliceDto.setAbout("Lorem ipsum dolor sit amet");
 
         super.testUpdate(aliceDto);

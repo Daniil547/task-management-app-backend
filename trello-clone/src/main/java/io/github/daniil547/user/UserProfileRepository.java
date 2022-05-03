@@ -4,5 +4,5 @@ import io.github.daniil547.common.repositories.PageRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends PageRepository<User> {
+public interface UserProfileRepository extends PageRepository<UserProfile> {
 }
