@@ -36,7 +36,7 @@ public class Attachment extends Domain {
     private UUID fileContentId;
     @Column(columnDefinition = "enum('DATABASE', 'FILE_SYSTEM')")
     @Enumerated(EnumType.STRING)
-    private FileStoragePlace fileStoragePlace;
+    private FileStorageType fileStorageType;
 
     @Column
     private UUID cardId;

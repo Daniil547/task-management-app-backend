@@ -19,10 +19,10 @@ public class AttachmentConverter extends DomainConverter<AttachmentDto, Attachme
         attachment.setExtension(dto.getExtension());
         attachment.setFileContentId(dto.getFileContentId());
         if (dto.getId() == null) {
-            attachment.setFileStoragePlace(fileStorageConfig.getFileStoragePlace());
+            attachment.setFileStorageType(fileStorageConfig.getFileStorageType());
         } else {
-            FileStoragePlace storagePlace = attachmentRepository.getFileStoragePlace(dto.getId());
-            attachment.setFileStoragePlace(storagePlace);
+            FileStorageType storagePlace = attachmentRepository.getFileStorageType(dto.getId());
+            attachment.setFileStorageType(storagePlace);
         }
 
         return attachment;

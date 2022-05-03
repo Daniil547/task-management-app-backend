@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @Getter
 public class FileStorageConfiguration {
-    private FileStoragePlace fileStoragePlace;
+    private FileStorageType fileStorageType;
     /**
      * <p>This configuration property is meant to be set only once.
      * Reassigning it to the new directory will cause default implementation

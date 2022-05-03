@@ -23,5 +23,5 @@ spring:
       max-file-size: "1GB"
       max-request-size: "1030MB"
 file-storage:
-  file-storage-place: DATABASE
+  file-storage-type: DATABASE
   file-system-directory: file-storage
