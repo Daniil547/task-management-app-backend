@@ -5,9 +5,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserSearchQueryParser extends SearchQueryParser<User> {
+public class UserSearchQueryParser extends SearchQueryParser<UserProfile> {
     @Override
-    public Specification<User> parse(String searchQuery) {
+    public Specification<UserProfile> parse(String searchQuery) {
         String query = searchQuery.replaceAll("username", "pageName")
                                   .replaceAll("about", "pageDescription");
 

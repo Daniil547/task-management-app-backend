@@ -7,7 +7,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public
-interface CardRepository extends PageRepository<Card> {
+public interface CardRepository extends PageRepository<Card> {
+
     Optional<Card> findByReminderId(UUID reminderId);
+
+    UUID getCardListIdById(UUID id);
 }

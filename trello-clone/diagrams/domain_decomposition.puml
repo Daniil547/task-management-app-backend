@@ -154,7 +154,7 @@ interface PositionResolver {
 
 
 class Member {
-    user: User
+    userProfile: User
     role: Role
 }
 enum Role {

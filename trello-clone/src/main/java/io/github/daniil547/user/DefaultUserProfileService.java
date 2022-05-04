@@ -5,19 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DefaultUserService extends DefaultPageService<UserDto, User> implements UserService {
+public class DefaultUserProfileService extends DefaultPageService<UserProfileDto, UserProfile> implements UserProfileService {
 
-    private final UserRepository repo;
+    private final UserProfileRepository repo;
     private final UserSearchQueryParser searchQueryParser;
 
     @Autowired
-    public DefaultUserService(UserRepository userRepository, UserSearchQueryParser searchQueryParser) {
-        this.repo = userRepository;
+    public DefaultUserProfileService(UserProfileRepository userProfileRepository, UserSearchQueryParser searchQueryParser) {
+        this.repo = userProfileRepository;
         this.searchQueryParser = searchQueryParser;
     }
 
     @Override
-    public UserRepository repository() {
+    public UserProfileRepository repository() {
         return this.repo;
     }
 

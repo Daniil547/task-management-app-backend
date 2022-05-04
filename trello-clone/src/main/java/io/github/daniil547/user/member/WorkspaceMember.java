@@ -24,7 +24,7 @@ public class WorkspaceMember extends Member {
     private UUID workspaceId;
 
     @Override
-    protected UUID getPlace() {
+    protected UUID getPlaceId() {
         return this.getWorkspaceId();
     }
 }
