@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.github.daniil547.card.elements.ReminderActionHandler;
-import io.github.daniil547.card.elements.ReminderActionIdentifier;
+import io.github.daniil547.card.elements.attachment.FileStorageConfiguration;
+import io.github.daniil547.card.elements.reminder.ReminderActionHandler;
+import io.github.daniil547.card.elements.reminder.ReminderActionIdentifier;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +23,7 @@ import java.util.Map;
 @Configuration
 @ComponentScan("io.github.daniil547")
 @EnableScheduling
+@EnableConfigurationProperties({FileStorageConfiguration.class})
 public class Config {
     @Bean
     @Primary

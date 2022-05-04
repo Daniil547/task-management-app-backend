@@ -1,8 +1,9 @@
 package io.github.daniil547.card;
 
 import io.github.daniil547.board.label.Label;
-import io.github.daniil547.card.elements.CheckList;
-import io.github.daniil547.card.elements.Reminder;
+import io.github.daniil547.card.elements.attachment.Attachment;
+import io.github.daniil547.card.elements.check_list.CheckList;
+import io.github.daniil547.card.elements.reminder.Reminder;
 import io.github.daniil547.common.domain.Page;
 import io.github.daniil547.user.member.BoardMember;
 import lombok.Data;
@@ -69,6 +70,11 @@ public class Card extends Page {
                cascade = CascadeType.ALL)
     // a workaround for MultipleBagFetchException
     private Set<CheckList> checkLists = new HashSet<>();
+
+    @OneToMany(mappedBy = "cardId",
+               fetch = FetchType.EAGER,
+               cascade = CascadeType.ALL)
+    private Set<Attachment> attachments = new HashSet<>();
 
     @OneToOne(targetEntity = Reminder.class,
               optional = true,

@@ -1,6 +1,6 @@
 package io.github.daniil547;
 
-import io.github.daniil547.card.elements.ReminderActionHandler;
+import io.github.daniil547.card.elements.reminder.ReminderActionHandler;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

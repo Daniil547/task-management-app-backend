@@ -1,6 +1,12 @@
 package io.github.daniil547.card.elements;
 
 import io.github.daniil547.Main;
+import io.github.daniil547.card.elements.reminder.OnStartupReminderExecutor;
+import io.github.daniil547.card.elements.reminder.Reminder;
+import io.github.daniil547.card.elements.reminder.ReminderActionHandler;
+import io.github.daniil547.card.elements.reminder.ReminderConverter;
+import io.github.daniil547.card.elements.reminder.ReminderDto;
+import io.github.daniil547.card.elements.reminder.ReminderRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;

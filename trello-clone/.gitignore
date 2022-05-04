@@ -1,5 +1,12 @@
-reated by https://www.toptal.com/developers/gitignore/api/intellij+all,java,gradle
+Created by https://www.toptal.com/developers/gitignore/api/intellij+all,java,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,java,gradle
+
+### File storage ###
+file-storage
+# exclude all files created via test runs
+test-file-storage/*
+# but keep the dir itself
+!test-file-storage/.gitkeep
 
 ### Intellij+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider

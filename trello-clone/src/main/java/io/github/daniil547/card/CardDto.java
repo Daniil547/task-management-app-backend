@@ -3,8 +3,9 @@ package io.github.daniil547.card;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.github.daniil547.board.label.LabelDto;
-import io.github.daniil547.card.elements.CheckListDto;
-import io.github.daniil547.card.elements.ReminderDto;
+import io.github.daniil547.card.elements.attachment.AttachmentDto;
+import io.github.daniil547.card.elements.check_list.CheckListDto;
+import io.github.daniil547.card.elements.reminder.ReminderDto;
 import io.github.daniil547.common.dto.PageDto;
 import io.github.daniil547.common.util.JsonDtoView;
 import io.swagger.annotations.ApiModel;
@@ -57,6 +58,12 @@ public class CardDto extends PageDto {
     @Getter(onMethod_ = @JsonProperty("checkLists"))
     @Setter(onMethod_ = @JsonProperty("checkLists"))
     private List<@Valid CheckListDto> checkListDtos = new ArrayList<>();
+
+    @JsonView({JsonDtoView.Basic.class,
+               JsonDtoView.Creation.class})
+    @Getter(onMethod_ = @JsonProperty("attachments"))
+    @Setter(onMethod_ = @JsonProperty("attachments"))
+    private List<@Valid AttachmentDto> attachmentDtos = new ArrayList<>();
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
