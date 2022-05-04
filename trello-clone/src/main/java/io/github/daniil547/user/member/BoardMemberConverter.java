@@ -10,6 +10,7 @@ public class BoardMemberConverter extends DomainConverter<MemberDto, BoardMember
     protected BoardMember transferEntitySpecificFieldsFromDto(MemberDto dto) {
         BoardMember boardMember = new BoardMember();
 
+        boardMember.setId(dto.getId());
         boardMember.setUserId(dto.getUserId());
         boardMember.setBoardId(dto.getPlaceId());
         boardMember.setRole(dto.getRole());
@@ -21,6 +22,7 @@ public class BoardMemberConverter extends DomainConverter<MemberDto, BoardMember
     protected MemberDto transferDtoSpecificFieldsFromEntity(BoardMember entity) {
         MemberDto memberDto = new MemberDto();
 
+        memberDto.setId(entity.getId());
         memberDto.setUserId(entity.getUserId());
         memberDto.setPlaceId(entity.getBoardId());
         memberDto.setRole(entity.getRole());

@@ -1,6 +1,6 @@
 package io.github.daniil547;
 
-import io.github.daniil547.card.elements.ReminderAction;
+import io.github.daniil547.card.elements.ReminderActionHandler;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 public class TestConfig {
     @Primary
     @Bean
-    public ReminderAction mockReminderExecutor() {
-        return Mockito.mock(ReminderAction.class);
+    public ReminderActionHandler mockReminderExecutor() {
+        return Mockito.mock(ReminderActionHandler.class);
     }
 }

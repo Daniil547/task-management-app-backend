@@ -31,6 +31,12 @@ public class ReminderDto extends DomainDto {
 
     @JsonView({JsonDtoView.Basic.class,
                JsonDtoView.Creation.class})
+    @NotNull
+    private ReminderActionIdentifier action;
+
+
+    @JsonView({JsonDtoView.Basic.class,
+               JsonDtoView.Creation.class})
     @JsonFormat(pattern = DATE_FORMAT)
     @NotNull
     @FutureOrPresent

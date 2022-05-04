@@ -18,3 +18,19 @@ spring:
   h2:
     console:
       enabled: true
+reminders:
+  executors:
+    on-startup:
+      mode:
+        parallel
+    scheduled:
+      mode:
+        parallel
+  actions:
+    smtp:
+      sender-address: noreply-reminder@asdad.com
+  execution:
+    parallelism: 5
+logging:
+  level:
+    root: info
