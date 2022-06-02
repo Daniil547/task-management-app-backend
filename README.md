@@ -15,7 +15,7 @@ A Java and Spring backend for a task management app. Developed for learning purp
  - SLF4J & LogBack
  - SpringFox
 ## Features
-Usage-wise:
+### Usage-wise:
  - Fundamental app structer looks like so:  
    - Workspaces can represent orginization or big departments of one orginization etc.  
      They contain
@@ -36,10 +36,10 @@ Usage-wise:
  - Labels can be added to Cards
    - Labels are stored in Boards (Labels are not unique to a Card; if you delete a Card with Labels, they will remain; if you delete a label it will be deleted from all the cards)
  - Workspaces and Boards also contain users
-   - A Board inside of a Workspace is not required to only contain Members of an enclosing Workspace. E.g. a company may hire freelancers for a project, so they will have a   
-   -   
-Programming-wise:  
+   - A Board inside of a Workspace is not required to only contain Members of an enclosing Workspace. E.g. a company may hire freelancers for a project and add them to a Board but not to a Workspace, so they will have access to the info on the project (Board) but won't have access to any other data owned by the company (Workspace)  
+### Programming-wise:  
  - a functional JSON API (ability to add users, workspaces etc)
  - Swagger docs
  - JWT auth 
- - Domain-imposed constraints. E.g. you can't add
+ - Domain-imposed constraints. E.g. you can't add a Card to a non-existant CardList
+ - Unit and integrational tests.
